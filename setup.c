@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 14:59:40 by sadamant          #+#    #+#             */
-/*   Updated: 2018/02/22 16:23:08 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/02/22 16:45:22 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,15 @@ t_window	*new_window(void)
 	win->w = W_WIDTH;
 	win->h = W_HEIGHT;
 	return (win);
+}
+
+t_player	*setup_player(void)
+{
+	t_player	*p;
+
+	p->x = 0;
+	p->y = 0;
+	p->h = 75;
+	p->fov = 60;
+	return (p);
 }

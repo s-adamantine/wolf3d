@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 13:49:44 by sadamant          #+#    #+#             */
-/*   Updated: 2018/02/22 16:27:09 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/02/22 16:46:06 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ typedef struct	s_image
 	int			h;
 }				t_image;
 
+typedef struct	s_player
+{
+	double		x;
+	double		y;
+	double		h;
+	double		fov;
+}				t_player;
+
 typedef struct	s_world
 {
 	int			wall_h;
@@ -52,6 +60,7 @@ typedef struct	s_env
 	t_window	*win;
 	t_image		*img;
 	t_world		*world;
+	t_player	*player;
 }				t_env;
 
 t_image			*new_image(t_env *e);
@@ -60,5 +69,6 @@ t_world			*setup_world(char **argv);
 void			exit_error(char *str);
 void			pixel_to_image(t_image *image, int x, int y, int color);
 void			print_image(t_env *);
+void			render(t_window *win);
 int				handle_keypress(int keycode, t_env *e);
 char			**parse_file(char **argv);

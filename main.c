@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:52:37 by sadamant          #+#    #+#             */
-/*   Updated: 2018/02/22 16:29:50 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/02/22 16:46:16 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static t_env	*setup_environment(int argc, char **argv)
 	e->win = new_window();
 	e->wid = mlx_new_window(e->mlx, e->win->w, e->win->h, "wolf3d");
 	e->world = setup_world(argv);
+	e->player = setup_player();
 	mlx_hook(e->wid, 2, 0, handle_keypress, e);
 	return (e);
 }
