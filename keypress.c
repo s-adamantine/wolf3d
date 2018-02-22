@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup.c                                            :+:      :+:    :+:   */
+/*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/22 14:59:40 by sadamant          #+#    #+#             */
-/*   Updated: 2018/02/22 16:23:08 by sadamant         ###   ########.fr       */
+/*   Created: 2018/02/22 15:57:42 by sadamant          #+#    #+#             */
+/*   Updated: 2018/02/22 16:29:12 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-t_world		*setup_world(char **argv)
+int		handle_keypress(int keycode, t_env *e)
 {
-	t_world		*world;
-
-	world = ft_memalloc(sizeof(t_world));
-	world->wall_h = WALL_H;
-	world->map = parse_file(argv);
-	return (world);
-}
-
-t_window	*new_window(void)
-{
-	t_window	*win;
-
-	win = ft_memalloc(sizeof(t_window));
-	win->w = W_WIDTH;
-	win->h = W_HEIGHT;
-	return (win);
+	if (keycode == ESC)
+	{
+		mlx_destroy_window(e->mlx, e->wid);
+		exit(EXIT_SUCCESS);
+	}
+	return (1);
 }

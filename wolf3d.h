@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 13:49:44 by sadamant          #+#    #+#             */
-/*   Updated: 2018/02/22 15:04:36 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/02/22 16:27:09 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 
 # define W_WIDTH 750
 # define W_HEIGHT 750
+
+# define WALL_H 100
+
+# define ESC 53
 
 typedef struct	s_image
 {
@@ -35,17 +39,26 @@ typedef struct	s_world
 	char		**map;
 }				t_world;
 
+typedef struct	s_window
+{
+	int			h;
+	int			w;
+}				t_window;
+
 typedef struct	s_env
 {
 	void		*mlx;
-	void		*win;
+	void		*wid;
+	t_window	*win;
 	t_image		*img;
 	t_world		*world;
 }				t_env;
 
 t_image			*new_image(t_env *e);
+t_window		*new_window(void);
 t_world			*setup_world(char **argv);
 void			exit_error(char *str);
 void			pixel_to_image(t_image *image, int x, int y, int color);
 void			print_image(t_env *);
+int				handle_keypress(int keycode, t_env *e);
 char			**parse_file(char **argv);

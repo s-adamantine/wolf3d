@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:52:37 by sadamant          #+#    #+#             */
-/*   Updated: 2018/02/22 15:11:22 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/02/22 16:29:50 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ static t_env	*setup_environment(int argc, char **argv)
 	}
 	e = ft_memalloc(sizeof(t_env));
 	e->mlx = mlx_init();
-	e->img = new_image(e);
+	e->win = new_window();
+	e->wid = mlx_new_window(e->mlx, e->win->w, e->win->h, "wolf3d");
 	e->world = setup_world(argv);
-	e->win = mlx_new_window(e->mlx, e->img->w, e->img->h, "wolf3d");
+	mlx_hook(e->wid, 2, 0, handle_keypress, e);
 	return (e);
 }
 
 int				main(int argc, char **argv)
 {
-	int			i;
 	t_env*		e;
 
 	e = setup_environment(argc, argv);

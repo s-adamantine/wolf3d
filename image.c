@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/18 17:58:48 by sadamant          #+#    #+#             */
-/*   Updated: 2018/02/21 15:16:06 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/02/22 16:26:43 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ t_image	*new_image(t_env *e)
 	t_image	*img;
 
 	img = ft_memalloc(sizeof(t_image));
-	img->w = W_WIDTH;
-	img->h = W_HEIGHT;
 	img->id = mlx_new_image(e->mlx, W_WIDTH, W_HEIGHT);
 	img->bitmap = mlx_get_data_addr(img->id, &(img->bpp), &(img->sline), \
 			&(img->endian));
