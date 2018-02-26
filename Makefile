@@ -6,7 +6,7 @@
 #    By: sadamant <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/18 17:46:32 by sadamant          #+#    #+#              #
-#    Updated: 2018/02/22 16:28:48 by sadamant         ###   ########.fr        #
+#    Updated: 2018/02/22 16:35:11 by sadamant         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = wolf3d
 LIBNAME1 = libft.a
 LIBNAME2 = libmlx.a
 
-SRC = main.c image.c setup.c parse.c error.c keypress.c
+SRC = main.c image.c setup.c parse.c error.c keypress.c cast.c
 OBJ = $(SRC:.c=.o)
 
 CC = gcc

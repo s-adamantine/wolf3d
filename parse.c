@@ -6,13 +6,13 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 15:09:28 by sadamant          #+#    #+#             */
-/*   Updated: 2018/02/22 14:47:56 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/02/26 17:09:25 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-char	**parse_file(char **argv)
+char	**parse_file(char **argv, t_world *world)
 {
 	int		i;
 	int		fd;
@@ -29,5 +29,7 @@ char	**parse_file(char **argv)
 	i = 0;
 	while (get_next_line(fd, &line) > 0)
 		map[i++] = ft_strcsplit(line, ' ');
+	world->w = ft_strlen(map[0]);
+	world->h = i;
 	return (map);	
 }

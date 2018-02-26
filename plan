@@ -1,0 +1,62 @@
+iterate through the screen in the x position, you don't need a y position at all
+player needs to be able to move the camera forwards, backwards, and turn left or right with the mouse position
+using the keypresses, the player would be able to move throughout x and y positions
+arithmetic shift operations on a number with multiples of two
+the player is half of the height of the walls
+define the player's x, y coordinates, and the angle that the player is facing
+fov of 60 degrees
+
+we know: 1. the dimension of the plane
+2. the center of the plane
+3. distance from the player to the plane (x_tot/2) / tan(30');
+4. angle b/w rays (or b/w columns): 60/x_tot
+
+world setup:
+1. parse file
+	convert from char ** to an int **
+		should we multiply and divide by the size of the grid while ray casting to find the first x and y intersection?
+		coordinates will be doubles so that you can be "in the middle" of a grid. 
+
+camera (also called player):
+1. turning: center angle changes with mouse move. (starts off at 0)
+		the greater the center angle change, the greater the turning speed
+		default this at 10
+2. moving: shoots a ray vector from the 'origin' - which is just the player moving through the map
+3. need a variable to account for where the center of the image is (where the player is looking at.) //also called the center of vision here
+
+ray casting:
+0. subtract half of the fov to get to the angle at the very left
+	need a current angle of the camera and a preset fov.
+1. cast a ray until it reaches a wall (at various increments)
+	create a function that only checks grid boundaries
+		horizontal and vertical separately
+			horizontal:
+				first find the coordinate of the first ray-grid intersection
+				(really just the x coordinate along the ray where the the y closest to the person is an integer)
+			if (first horizontal intersection is too big)
+				return (nope);
+			while (!wall_found_x)
+				xa = y_height / tan(fov/2);
+			vertical:
+				while (!wall_found_y)	
+					ya += y_height;
+			distance = (dist_x > dist_y ? dist_x : dist_y);
+2. record the distance to the wall (length of the ray)
+3. add the angle increment so that the ray moves to the right (fov/x_total) degrees
+	
+	defining projection attributes:
+
+	finding distance to projection plane:
+
+	finding wall:
+
+	finding distance to wall:
+
+	looking up and down:
+
+	jumping and crouching:
+
+collison detection:
+1. if the player walks to a wall, they can't go through it
+	if (e->wall[cam.x] == 1 || e->wall[cam.y] == 1)
+		cantwalk();
