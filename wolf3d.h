@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 13:49:44 by sadamant          #+#    #+#             */
-/*   Updated: 2018/02/26 17:07:40 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/01 17:43:05 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,15 @@ typedef struct	s_player
 	double		fov;
 	double		cov;
 }				t_player;
+
+typedef struct	s_ray
+{
+	double		x;
+	double		y;
+	double		dx;
+	double		dy;
+	double		a;
+}				t_ray;
 
 typedef struct	s_world
 {
