@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 15:56:47 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/02 14:00:55 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/02 16:54:03 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,25 @@ static int	check_wall(t_world *world, int x, int y)
 	return (0);
 }
 
+static void first_vintersection(t_ray *ray, t_world *world, t_player *p)
+{
+	//need to make sure that ray->a never gets less than 0 or greater than 2pi
+	ray->x = (ray->a < (M_PI / 2) || ray->a > (3 * M_PI) / 2) ? \
+			 (int)(p->x / world->tile) * world->tile + world->tile : \
+			 (int)(p->x / world->tile) * world->tile - 1;
+ 	if (ray->a >= -0.000001 && ray->a <= 0.000001)
+		ray->y = ((p->y / world->tile) + 1) * world->tile;
+	else if (ray->a >= (M_PI - 0.000001) && ray->a <= (M_PI + 0.000001))
+		ray->y = (p->y / world->tile) * world->tile;
+	else
+		ray->y = p->y + (p->x - ray->x) * tan(ray->a);
+}
+
 static void	first_hintersection(t_ray *ray, t_world *world, t_player *p)
 {
 	ray->y = (ray->a > 0 && ray->a < M_PI) ? (int)(p->y / world->tile) * \
 			 world->tile - 1 : (int)(p->y / world->tile) * world->tile + world->tile;
-	if ((ray->a >= -0.000001 && ray->a <= 0.000001) || \
-			(ray->a >= ((2 * M_PI) - 0.000001) && ray->a <= ((2 * M_PI) + 0.000001)))
+	if (ray->a >= -0.000001 && ray->a <= 0.000001)
 		ray->x = ((p->x / world->tile) + 1) * world->tile;
 	else if (ray->a >= (M_PI - 0.000001) && ray->a <= (M_PI + 0.000001))
 		ray->x = (p->x / world->tile) * world->tile;
@@ -50,8 +63,6 @@ static int	cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 	first_hintersection(ray, world, p);
 	while (check_wall(world, ray->x, ray->y) == 0)
 	{
-		printf("checking: %d, %d ", (int)ray->x / world->tile, (int)ray->y / world->tile);
-		printf("returning: %d \n", check_wall(world, ray->x, ray->y));
 		if (ray->a >= -0.000001 && ray->a <= 0.000001)
 			ray->x += world->tile;
 		else if (ray->a >= (M_PI - 0.000001) && ray->a <= (M_PI + 0.000001))
@@ -59,10 +70,28 @@ static int	cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 		else
 		{
 			ray->x += world->tile/tan(ray->a);
-			ray->y += (ray->a > 0 && ray->a < (M_PI / 2)) ? -world->tile : world->tile;
+			ray->y += (ray->a > 0 && ray->a < M_PI) ? -world->tile : world->tile;
 		}
 	}
-	printf("last check: %d, %d ", (int)ray->x / world->tile, (int)ray->y / world->tile);
+	return (check_wall(world, ray->x, ray->y));
+}
+
+static int	cast_vertical(t_world *world, t_player *p, t_ray *ray)
+{
+	first_vintersection(ray, world, p);
+	while (check_wall(world, ray->x, ray->y) == 0)
+	{
+		if (ray->a >= -0.000001 && ray->a <= 0.000001)
+			ray->y += world->tile;
+		else if (ray->a >= (M_PI - 0.000001) && ray->a <= (M_PI + 0.000001))
+			ray->y -= world->tile;
+		else
+		{
+			ray->x += (ray->a < (M_PI / 2) || ray->a > (3 * M_PI) / 2) ? \
+				world->tile : -world->tile;
+			ray->y += -world->tile * tan(ray->a);
+		}
+	}
 	return (check_wall(world, ray->x, ray->y));
 }
 
@@ -89,13 +118,12 @@ void		render(t_env *e)
 	i = 0;
 	ray = ft_memalloc(sizeof(t_ray));
 	ray->a = e->p->cov + (e->p->fov / 2);
-	printf("%d\n", cast_horizontal(e->world, e->p, ray));
-	/*
 	while (ray->a > e->p->cov - (e->p->fov / 2))
 	{
 		ray->a = (ray->a > (2 * M_PI)) ? ray->a - (2 * M_PI) : ray->a;
+		ray->a = (ray->a < 0) ? ray->a + (2 * M_PI) : ray->a;
 		cast_horizontal(e->world, e->p, ray);
-//		cast_vertical(e->world, e->p, alpha);
+		cast_vertical(e->world, e->p, ray);
 		ray->a -= e->p->fov / e->win->w;
-	}*/
+	}
 }
