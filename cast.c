@@ -54,6 +54,7 @@ static int	angled(double value)
 		return (0);
 	return (1);
 }
+
 /*
 ** checks whether there is a wall at a specific ex and ey.
 ** return 1 if the ray hits a wall, 0 if hasn't yet hit a wall, and
@@ -70,15 +71,6 @@ static int	check_wall(t_world *world, int x, int y)
 	return (0);
 }
 
-static void first_vintersection(t_ray *ray, t_world *world, t_player *p)
-{
-	//need to make sure that ray->a never gets less than 0 or greater than 2pi
-	ray->x = (ray->a < (M_PI / 2) || ray->a > (3 * M_PI) / 2) ? \
-		 (int)(p->x / world->tile) * world->tile + world->tile : \
-		 (int)(p->x / world->tile) * world->tile - 1;
-	ray->y = p->y + (p->x - ray->x) * tan(ray->a); //works even w/ 0 and pi bc the + x scratches out to be 0 and is just p->y.
-}
-
 static void	first_hintersection(t_ray *ray, t_world *world, t_player *p)
 {
 	ray->y = (ray->a > 0 && ray->a < M_PI) ? (int)(p->y / world->tile) * \
@@ -86,7 +78,15 @@ static void	first_hintersection(t_ray *ray, t_world *world, t_player *p)
 	if (is_piover2(ray->a) || is_3piover2(ray->a))
 		ray->x = p->x;
 	else
-		ray->x = p->x + (int)((p->y - ray->y) / tan(ray->a)); //need an if statement here bc tan(pi/2 and tan(3pi/2) are both not defined)
+		ray->x = p->x + (int)((p->y - ray->y) / tan(ray->a));
+}
+
+static void first_vintersection(t_ray *ray, t_world *world, t_player *p)
+{
+	ray->x = (ray->a < (M_PI / 2) || ray->a > (3 * M_PI) / 2) ? \
+		 (int)(p->x / world->tile) * world->tile + world->tile : \
+		 (int)(p->x / world->tile) * world->tile - 1;
+	ray->y = p->y + (p->x - ray->x) * tan(ray->a);
 }
 
 /*
@@ -98,7 +98,7 @@ static int	cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 	first_hintersection(ray, world, p);
 	while (check_wall(world, ray->x, ray->y) == 0)
 	{
-		if (is_piover2(ray->a)) //x is just p->x, and wouldn't need to change
+		if (is_piover2(ray->a))
 			ray->y -= world->tile;
 		else if (is_3piover2(ray->a))
 			ray->y += world->tile;
@@ -116,9 +116,8 @@ static int	cast_vertical(t_world *world, t_player *p, t_ray *ray)
 	first_vintersection(ray, world, p);
 	while (check_wall(world, ray->x, ray->y) == 0)
 	{
-		printf("checking vertical %d, %d\n", (int)ray->x / world->tile, (int)ray->y / world->tile);
 		if (is_zero(ray->a))
-			ray->x += world->tile; //y is just p->y, and wouldn't need to change.
+			ray->x += world->tile;
 		else if (is_pi(ray->a))
 			ray->x -= world->tile;
 		else
@@ -128,20 +127,8 @@ static int	cast_vertical(t_world *world, t_player *p, t_ray *ray)
 			ray->y += -world->tile * tan(ray->a);
 		}
 	}
-	printf("checking vertical %d, %d\n", (int)ray->x / world->tile, (int)ray->y / world->tile);
 	return (check_wall(world, ray->x, ray->y));
 }
-
-/*
-** this is really pseudocode though
-static int	cast_ray()
-{
-	if ((cast_horizontal(e->world, e->p, alpha) == 1) || (cast_vertical(e->world, e->p, alpha) == 1))
-		draw_wall();
-	else
-		draw_nothing();
-}
-*/
 
 /*
 ** goes through the entire window and if there's a wall intersection, finds the distance of
