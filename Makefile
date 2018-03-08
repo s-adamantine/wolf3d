@@ -14,7 +14,7 @@ NAME = wolf3d
 LIBNAME1 = libft.a
 LIBNAME2 = libmlx.a
 
-SRC = main.c image.c setup.c parse.c error.c keypress.c cast.c
+SRC = main.c image.c setup.c parse.c error.c keypress.c cast.c wall.c is_num.c
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
