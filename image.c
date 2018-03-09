@@ -19,24 +19,26 @@ void	clear_image(t_image *img)
 
 void	print_image(t_env *e)
 {
-	mlx_put_image_to_window(e->mlx, e->win, e->img->id, 0, 0);
+	mlx_put_image_to_window(e->mlx, e->wid, e->img->id, 0, 0);
 	clear_image(e->img);
 }
 
-void	pixel_to_image(t_image *image, int x, int y, int color)
+void	insert_bitmap(t_image *img, int x, int y, int color)
 {
-	if (x < 0 || x >= image->w || y < 0 || y >= image->h)
+	if (x < 0 || x >= img->w || y < 0 || y >= img->h)
 		return ;
-	ft_memcpy(&(image->bitmap)[(x++ * image->bpp / 8) + \
-		(y * image->sline)], &color, image->bpp / 8);
+	ft_memcpy(&(img->bitmap)[(x++ * img->bpp / 8) + \
+		(y * img->sline)], &color, img->bpp / 8);
 }
 
-t_image	*new_image(t_env *e)
+t_image	*new_image(t_env *e, int width, int height)
 {
 	t_image	*img;
 
 	img = ft_memalloc(sizeof(t_image));
-	img->id = mlx_new_image(e->mlx, W_WIDTH, W_HEIGHT);
+	img->w = width;
+	img->h = height;
+	img->id = mlx_new_image(e->mlx, width, height);
 	img->bitmap = mlx_get_data_addr(img->id, &(img->bpp), &(img->sline), \
 			&(img->endian));
 	return (img);

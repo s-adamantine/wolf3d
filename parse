@@ -1,0 +1,10 @@
+read all of the data
+	put whatever is read into a list
+ft_lstcount;
+malloc map[i] using the number of data that's recuperated in the list
+malloc in map[i][j] using ft_wordcount
+create a function that goes through the line data and 
+	go through the list
+	for each line data
+		malloc in using word count
+		do a tab split, which is just a modified version of string split

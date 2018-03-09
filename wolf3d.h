@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 13:49:44 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/01 17:43:05 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/08 17:34:40 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@
 # define W_WIDTH 750
 # define W_HEIGHT 750
 
-# define WALL_H 100
+# define WALL_H 64
 # define TILE_SIZE 64
 
+# define COLOR 0x00FFFFFF
 # define ESC 53
 
 typedef struct	s_image
@@ -54,11 +55,11 @@ typedef struct	s_player
 
 typedef struct	s_ray
 {
-	double		x;
-	double		y;
+	double		x; //intersection ray
+	double		y; //and here too!
 	double		dx;
 	double		dy;
-	double		a;
+	double		a; //the angle w/r to 0
 }				t_ray;
 
 typedef struct	s_world
@@ -86,12 +87,14 @@ typedef struct	s_env
 	t_player	*p;
 }				t_env;
 
-t_image			*new_image(t_env *e);
+t_image			*new_image(t_env *e, int width, int height);
+void			insert_bitmap(t_image *image, int x, int y, int color);
+void			print_image(t_env *);
+
 t_env			*setup_environment(int argc, char **argv);
 void			exit_error(char *str);
-void			pixel_to_image(t_image *image, int x, int y, int color);
-void			print_image(t_env *);
 void			render(t_env *e);
+void			draw_wallpiece(t_env *e, t_ray *ray, int x);
 int				handle_keypress(int keycode, t_env *e);
 char			**parse_file(char **argv, t_world *world);
 

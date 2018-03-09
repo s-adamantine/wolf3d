@@ -1,0 +1,6 @@
+1. horizontal angle and vertical angle in casting (the first if statement)
+2. why is line 34/35 segfaulting in cast (when it reaches zero)?
+	if (world->map[Fy / world->tile][Fx / world->tile] == 'x')
+		return (1);
+	what's it trying to access :c
+3. still need to loop until the edge of the map if it doesn't hit a wall the first horizontal time round

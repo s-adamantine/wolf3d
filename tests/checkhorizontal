@@ -1,0 +1,14 @@
+printf("first: %d, %d ", (int)ray->x / world->tile, (int)ray->y / world->tile);
+printf("returning: %d \n", check_wall(world, ray->x, ray->y));
+ray->x += (ray->a >= -0.000001 && ray->a <= 0.000001) ? world->tile : world->tile/tan(ray->a);
+ray->y += (ray->a > 0 && ray->a < (M_PI / 2)) ? -world->tile : world->tile;
+printf("second: %d, %d ", (int)ray->x / world->tile, (int)ray->y / world->tile);
+printf("returning: %d \n", check_wall(world, ray->x, ray->y));
+ray->x += (ray->a >= -0.000001 && ray->a <= 0.000001) ? world->tile : world->tile/tan(ray->a);
+ray->y += (ray->a > 0 && ray->a < (M_PI / 2)) ? -world->tile : world->tile;
+printf("third: %d, %d ", (int)ray->x / world->tile, (int)ray->y / world->tile);
+printf("returning: %d \n", check_wall(world, ray->x, ray->y));
+ray->x += (ray->a >= -0.000001 && ray->a <= 0.000001) ? world->tile : world->tile/tan(ray->a);
+ray->y += (ray->a > 0 && ray->a < (M_PI / 2)) ? -world->tile : world->tile;
+printf("fourth: %d, %d ", (int)ray->x / world->tile, (int)ray->y / world->tile);
+printf("returning: %d \n", check_wall(world, ray->x, ray->y));

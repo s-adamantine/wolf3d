@@ -102,9 +102,9 @@ static int	cast_vertical(t_world *world, t_player *p, t_ray *ray)
 void		render(t_env *e)
 {
 	t_ray	*ray;
-	int	i;
+	int		x;
 
-	i = 0;
+	x = 0;
 	ray = ft_memalloc(sizeof(t_ray));
 	ray->a = e->p->cov + (e->p->fov / 2);
 	while (ray->a > e->p->cov - (e->p->fov / 2))
@@ -119,5 +119,9 @@ void		render(t_env *e)
 		else if (is_piover2(ray->a) || is_3piover2(ray->a))
 			cast_horizontal(e->world, e->p, ray);
 		ray->a -= e->p->fov / e->win->w;
+		draw_wallpiece(e, ray, x);
+		x++;
+		// printf("intersects at %f, %f", ray->x, ray->y);
 	}
+	print_image(e);
 }
