@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 13:52:37 by sadamant          #+#    #+#             */
-/*   Updated: 2018/02/26 12:24:27 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/13 11:53:27 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int				main(int argc, char **argv)
 
 	e = setup_environment(argc, argv);
 	render(e);
-	// draw_square(e);
-	print_image(e);
 	mlx_loop(e->mlx);
 	return (0);
 }

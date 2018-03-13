@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 14:59:40 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/02 16:55:44 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/13 12:05:13 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static t_player		*setup_player(void)
 	p->h = 75;
 	p->d = 255;
 	p->fov = M_PI / 3;
-	p->cov = 330 * (M_PI / 180);
+	p->cov = 30 * (M_PI / 180);
 	return (p);
 }
 
