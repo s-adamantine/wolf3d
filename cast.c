@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 15:56:47 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/13 13:29:27 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/13 16:36:38 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ int			angled(double value)
 	return (1);
 }
 
-/*
-** checks whether there is a wall at a specific ex and ey.
-** return 1 if the ray hits a wall, 0 if hasn't yet hit a wall, and
-** -1 if the ray reached map boundaries.
-*/
 static int	check_wall(t_world *world, int x, int y)
 {
 	if (x < 0 || y < 0)
@@ -54,43 +49,47 @@ static void first_vintersection(t_ray *ray, t_world *world, t_player *p)
 	ray->y = p->y + (p->x - ray->x) * tan(ray->a);
 }
 
-/*
-** finds grid coordinates along the ray path to check for wall presence
-** 1 if there's a wall, -1 if there isn't.
-*/
-int			cast_horizontal(t_world *world, t_player *p, t_ray *ray)
+t_ray		*cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 {
-	first_hintersection(ray, world, p);
-	while (check_wall(world, ray->x, ray->y) == 0)
+	t_ray	*rh;
+
+	rh = ft_memalloc(sizeof(t_ray));
+	rh->a = ray->a;
+	first_hintersection(rh, world, p);
+	while (check_wall(world, rh->x, rh->y) == 0)
 	{
-		if (is_piover2(ray->a))
-			ray->y -= world->tile;
-		else if (is_3piover2(ray->a))
-			ray->y += world->tile;
+		if (is_piover2(rh->a))
+			rh->y -= world->tile;
+		else if (is_3piover2(rh->a))
+			rh->y += world->tile;
 		else
 		{
-			ray->x += world->tile/tan(ray->a);
-			ray->y += (ray->a > 0 && ray->a < M_PI) ? -world->tile : world->tile;
+			rh->x += world->tile/tan(rh->a);
+			rh->y += (rh->a > 0 && rh->a < M_PI) ? -world->tile : world->tile;
 		}
 	}
-	return (check_wall(world, ray->x, ray->y));
+	return (rh);
 }
 
-int			cast_vertical(t_world *world, t_player *p, t_ray *ray)
+t_ray		*cast_vertical(t_world *world, t_player *p, t_ray *ray)
 {
-	first_vintersection(ray, world, p);
-	while (check_wall(world, ray->x, ray->y) == 0)
+	t_ray	*rv;
+
+	rv = ft_memalloc(sizeof(t_ray));
+	rv->a = ray->a;
+	first_vintersection(rv, world, p);
+	while (check_wall(world, rv->x, rv->y) == 0)
 	{
-		if (is_zero(ray->a))
-			ray->x += world->tile;
-		else if (is_pi(ray->a))
-			ray->x -= world->tile;
+		if (is_zero(rv->a))
+			rv->x += world->tile;
+		else if (is_pi(rv->a))
+			rv->x -= world->tile;
 		else
 		{
-			ray->x += (ray->a < (M_PI / 2) || ray->a > ((3 * M_PI) / 2)) ? \
+			rv->x += (rv->a < (M_PI / 2) || rv->a > ((3 * M_PI) / 2)) ? \
 				world->tile : -world->tile;
-			ray->y += -world->tile * tan(ray->a);
+			rv->y += -world->tile * tan(rv->a);
 		}
 	}
-	return (check_wall(world, ray->x, ray->y));
+	return (rv);
 }
