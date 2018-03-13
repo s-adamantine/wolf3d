@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 14:37:35 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/13 12:01:26 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/13 13:40:05 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ void	draw_wallpiece(t_env *e, t_ray *ray, int x)
 	dist *= cos(b);
 	h = (int)((e->world->wall_h / dist) * e->p->d) + 1; //you can precompute w->wall_h / p->d bc that's always the same
 	y = (e->win->h / 2) - (h/2); //the first coordinate that you want to write in
-	printf("e->world->wall_h is %d\n", e->world->wall_h);
-	printf("h is %d, x is %d, and y is %d\n", h, x, y);
 	while (h--)
 		insert_bitmap(e->img, x, y++, COLOR);
-	//y = 100;
-	//while (y++ < 150)
-	//	insert_bitmap(e->img, 350, y, COLOR);
 }

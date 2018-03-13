@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 13:49:44 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/08 17:34:40 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/13 13:28:28 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 
 # define COLOR 0x00FFFFFF
 # define ESC 53
+
+# define LEFT 123
+# define RIGHT 124
+# define DOWN 125
+# define UP 126
 
 typedef struct	s_image
 {
@@ -103,3 +108,7 @@ int				is_piover2(double value);
 int				is_pi(double value);
 int				is_3piover2(double value);
 int				is_2pi(double value);
+int				angled(double value);
+
+int				cast_horizontal(t_world *world, t_player *p, t_ray *ray);
+int				cast_vertical(t_world *world, t_player *p, t_ray *ray);

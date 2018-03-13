@@ -6,13 +6,13 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 15:56:47 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/07 16:00:58 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/13 13:29:27 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-static int	angled(double value)
+int			angled(double value)
 {
 	if (is_zero(value) || is_piover2(value) || is_3piover2(value) || \
 		is_pi(value) || is_2pi(value))
@@ -58,7 +58,7 @@ static void first_vintersection(t_ray *ray, t_world *world, t_player *p)
 ** finds grid coordinates along the ray path to check for wall presence
 ** 1 if there's a wall, -1 if there isn't.
 */
-static int	cast_horizontal(t_world *world, t_player *p, t_ray *ray)
+int			cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 {
 	first_hintersection(ray, world, p);
 	while (check_wall(world, ray->x, ray->y) == 0)
@@ -76,7 +76,7 @@ static int	cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 	return (check_wall(world, ray->x, ray->y));
 }
 
-static int	cast_vertical(t_world *world, t_player *p, t_ray *ray)
+int			cast_vertical(t_world *world, t_player *p, t_ray *ray)
 {
 	first_vintersection(ray, world, p);
 	while (check_wall(world, ray->x, ray->y) == 0)
@@ -93,35 +93,4 @@ static int	cast_vertical(t_world *world, t_player *p, t_ray *ray)
 		}
 	}
 	return (check_wall(world, ray->x, ray->y));
-}
-
-/*
-** goes through the entire window and if there's a wall intersection, finds the distance of
-** wall to player, and draws the wall.
-*/
-void		render(t_env *e)
-{
-	t_ray	*ray;
-	int		x;
-
-	x = 0;
-	ray = ft_memalloc(sizeof(t_ray));
-	ray->a = e->p->cov + (e->p->fov / 2);
-	while (ray->a > e->p->cov - (e->p->fov / 2))
-	{
-		if (angled(ray->a))
-		{
-			cast_horizontal(e->world, e->p, ray);
-			cast_vertical(e->world, e->p, ray);
-		}
-		else if (is_zero(ray->a) || is_pi(ray->a) || is_2pi(ray->a))
-			cast_vertical(e->world, e->p, ray);
-		else if (is_piover2(ray->a) || is_3piover2(ray->a))
-			cast_horizontal(e->world, e->p, ray);
-		ray->a -= e->p->fov / e->win->w;
-		draw_wallpiece(e, ray, x);
-		x++;
-		// printf("intersects at %f, %f", ray->x, ray->y);
-	}
-	print_image(e);
 }
