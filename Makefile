@@ -1,4 +1,4 @@
-# **************************************************************************** #
+#**************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -6,7 +6,7 @@
 #    By: sadamant <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/18 17:46:32 by sadamant          #+#    #+#              #
-#    Updated: 2018/03/13 13:36:10 by sadamant         ###   ########.fr        #
+#    Updated: 2018/03/14 20:23:14 by sadamant         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,9 @@ NAME = wolf3d
 LIBNAME1 = libft.a
 LIBNAME2 = libmlx.a
 
-SRC = main.c image.c setup.c parse.c error.c keypress.c cast.c wall.c is_num.c \
-	  render.c
+SRC = main.c image.c setup.c parse.c error.c \
+	  keypress.c cast.c wall.c render.c \
+	  math/is_num.c math/angled.c
 
 OBJ = $(SRC:.c=.o)
 

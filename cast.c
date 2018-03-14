@@ -12,14 +12,6 @@
 
 #include "wolf3d.h"
 
-int			angled(double value)
-{
-	if (is_zero(value) || is_piover2(value) || is_3piover2(value) || \
-		is_pi(value) || is_2pi(value))
-		return (0);
-	return (1);
-}
-
 static int	check_wall(t_world *world, int x, int y)
 {
 	if (x < 0 || y < 0)

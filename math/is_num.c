@@ -6,11 +6,11 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 20:30:06 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/07 20:30:08 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/14 20:23:53 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "wolf3d.h"
+#include "../wolf3d.h"
 
 int		is_zero(double value)
 {
