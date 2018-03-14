@@ -6,7 +6,7 @@
 #    By: sadamant <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/18 17:46:32 by sadamant          #+#    #+#              #
-#    Updated: 2018/03/14 20:23:14 by sadamant         ###   ########.fr        #
+#    Updated: 2018/03/14 20:40:49 by sadamant         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,10 +41,10 @@ $(NAME):
 
 clean:
 	@$(MAKE) clean -C $(LIBDIR1)
-	@$(MAKE) clean -C $(LIBDIR2)
 	@rm -rf $(OBJ)
 
 fclean: clean
+	@$(MAKE) clean -C $(LIBDIR2)
 	@rm -rf $(NAME) $(LIBDIR1)/$(LIBNAME1)
 
 re: fclean all

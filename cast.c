@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 15:56:47 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/13 16:36:38 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/14 20:36:37 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 			rh->y += world->tile;
 		else
 		{
-			rh->x += world->tile/tan(rh->a);
+			rh->x += fabs(world->tile/tan(rh->a));
 			rh->y += (rh->a > 0 && rh->a < M_PI) ? -world->tile : world->tile;
 		}
 	}
