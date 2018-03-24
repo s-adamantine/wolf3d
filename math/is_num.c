@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/07 20:30:06 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/14 20:23:53 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/14 21:24:57 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		is_zero(double value)
 
 int		is_piover2(double value)
 {
-	if (value >= (M_PI / 2 - 0.000001) && value <= (M_PI / 2 + 0.000001))
+	if (value >= ((M_PI / 2) - 0.000001) && value <= ((M_PI / 2) + 0.000001))
 		return (1);
 	return (0);
 }

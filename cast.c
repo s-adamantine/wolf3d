@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/22 15:56:47 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/14 20:36:37 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/14 23:20:54 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	first_hintersection(t_ray *ray, t_world *world, t_player *p)
 		ray->x = p->x + (int)((p->y - ray->y) / tan(ray->a));
 }
 
-static void first_vintersection(t_ray *ray, t_world *world, t_player *p)
+static void	first_vintersection(t_ray *ray, t_world *world, t_player *p)
 {
 	ray->x = (ray->a < (M_PI / 2) || ray->a > (3 * M_PI) / 2) ? \
 		 (int)(p->x / world->tile) * world->tile + world->tile : \
@@ -43,12 +43,13 @@ static void first_vintersection(t_ray *ray, t_world *world, t_player *p)
 
 t_ray		*cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 {
+	int		wall;
 	t_ray	*rh;
 
 	rh = ft_memalloc(sizeof(t_ray));
 	rh->a = ray->a;
 	first_hintersection(rh, world, p);
-	while (check_wall(world, rh->x, rh->y) == 0)
+	while ((wall = check_wall(world, rh->x, rh->y)) == 0)
 	{
 		if (is_piover2(rh->a))
 			rh->y -= world->tile;
@@ -60,17 +61,20 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 			rh->y += (rh->a > 0 && rh->a < M_PI) ? -world->tile : world->tile;
 		}
 	}
+	if (wall == -1)
+		return (NULL);
 	return (rh);
 }
 
 t_ray		*cast_vertical(t_world *world, t_player *p, t_ray *ray)
 {
+	int		wall;
 	t_ray	*rv;
 
 	rv = ft_memalloc(sizeof(t_ray));
 	rv->a = ray->a;
 	first_vintersection(rv, world, p);
-	while (check_wall(world, rv->x, rv->y) == 0)
+	while ((wall = check_wall(world, rv->x, rv->y)) == 0)
 	{
 		if (is_zero(rv->a))
 			rv->x += world->tile;
@@ -83,5 +87,7 @@ t_ray		*cast_vertical(t_world *world, t_player *p, t_ray *ray)
 			rv->y += -world->tile * tan(rv->a);
 		}
 	}
+	if (wall == -1)
+		return (NULL);
 	return (rv);
 }

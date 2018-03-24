@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/13 13:32:17 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/13 16:30:17 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/03/14 21:36:32 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,21 @@ void		render(t_env *e)
 		{
 			rv = cast_vertical(e->world, e->p, ray);
 			rh = cast_horizontal(e->world, e->p, ray);
-			ray->x = (rv->x < rh->x) ? rv->x : rh->x;
-			ray->y = (rv->y < rh->y) ? rv->y : rh->y;
+			//this actually needs to be the distance, and needs to account for if
+			//you don't find a wall.
+			if (rv && rh)
+			{
+				ray->x = (rv->x < rh->x) ? rv->x : rh->x;
+				ray->y = (rv->y < rh->y) ? rv->y : rh->y;
+			}
 		}
 		else if (is_piover2(ray->a) || is_3piover2(ray->a))
 			cast_horizontal(e->world, e->p, ray);
 		else if (is_zero(ray->a) || is_pi(ray->a) || is_2pi(ray->a))
 			cast_vertical(e->world, e->p, ray);
 		ray->a -= e->p->fov / e->win->w;
-		draw_wallpiece(e, ray, x);
+		if (ray->x && ray->y)
+			draw_wallpiece(e, ray, x);
 		x++;
 	}
 	print_image(e);

@@ -6,7 +6,7 @@
 #    By: sadamant <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/18 17:46:32 by sadamant          #+#    #+#              #
-#    Updated: 2018/03/14 20:40:49 by sadamant         ###   ########.fr        #
+#    Updated: 2018/03/14 21:43:54 by sadamant         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ LIBNAME1 = libft.a
 LIBNAME2 = libmlx.a
 
 SRC = main.c image.c setup.c parse.c error.c \
-	  keypress.c cast.c wall.c render.c \
+	  keypress.c cast.c draw.c render.c \
 	  math/is_num.c math/angled.c
 
 OBJ = $(SRC:.c=.o)
@@ -51,4 +51,4 @@ re: fclean all
 
 pr:
 	@rm -rf $(NAME)
-	$(CC) $(FLAGS) $(SRC) $(LIBS) $(INCLUDES) -o $(NAME)
+	@$(CC) $(FLAGS) $(SRC) $(LIBS) $(INCLUDES) -o $(NAME)
