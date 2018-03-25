@@ -18,6 +18,7 @@ void	move_camera(int keycode, t_env *e)
 		e->p->cov += 10 * (M_PI / 180);
 	if (keycode == RIGHT)
 		e->p->cov -= 10 * (M_PI / 180);
+	printf("cov: %f\n", e->p->cov * (180 / M_PI));
 	render(e);
 }
 

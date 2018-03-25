@@ -12,11 +12,20 @@
 
 #include "wolf3d.h"
 
+static double	constrain_cov(t_player *p)
+{
+	if (p->cov < ((-M_PI / 2) + p->fov))
+		p->cov += (2 * M_PI);
+	if (p->cov > (2.5 * M_PI) - p->fov / 2)
+		p->cov -= (2 * M_PI);
+	return (p->cov);
+}
+
 /*
 ** goes through the entire window and if there's a wall intersection, finds the distance of
 ** wall to player, and draws the wall.
 */
-void		render(t_env *e)
+void			render(t_env *e)
 {
 	t_ray	*ray;
 	t_ray	*rh;
@@ -25,6 +34,7 @@ void		render(t_env *e)
 
 	x = 0;
 	ray = ft_memalloc(sizeof(t_ray));
+	e->p->cov = constrain_cov(e->p);
 	ray->a = e->p->cov + (e->p->fov / 2);
 	while (ray->a > e->p->cov - (e->p->fov / 2))
 	{
