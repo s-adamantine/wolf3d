@@ -62,8 +62,7 @@ typedef struct	s_ray
 {
 	double		x; //intersection ray
 	double		y; //and here too!
-	double		dx;
-	double		dy;
+	double		s; //distance from ray to player
 	double		a; //the angle w/r to 0
 }				t_ray;
 
@@ -109,6 +108,8 @@ int				is_pi(double value);
 int				is_3piover2(double value);
 int				is_2pi(double value);
 int				angled(double value);
+
+double			distance(t_ray *r, t_player *p);
 
 t_ray			*cast_horizontal(t_world *world, t_player *p, t_ray *ray);
 t_ray			*cast_vertical(t_world *world, t_player *p, t_ray *ray);

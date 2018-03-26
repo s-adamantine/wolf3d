@@ -42,13 +42,22 @@ void			render(t_env *e)
 		{
 			rv = cast_vertical(e->world, e->p, ray);
 			rh = cast_horizontal(e->world, e->p, ray);
-			//this actually needs to be the distance, and needs to account for if
-			//you don't find a wall.
+			//needs to account for if rh or rv doesn't exist
 			if (rv && rh)
 			{
-				ray->x = (rv->x < rh->x) ? rv->x : rh->x;
-				ray->y = (rv->y < rh->y) ? rv->y : rh->y;
+				ray->x = (rh->s < rv->s) ? rh->x : rv->x;
+				ray->y = (rh->s < rv->s) ? rh->y : rv->y;
 			}
+			// else if (rv && !rh)
+			// {
+			// 	ray->x = rv->x;
+			// 	ray->y = rv->y;
+			// }
+			// else if (rh && !rv)
+			// {
+			// 	ray->x = rh->x;
+			// 	ray->y = rh->y;
+			// }
 		}
 		else if (is_piover2(ray->a) || is_3piover2(ray->a))
 			cast_horizontal(e->world, e->p, ray);

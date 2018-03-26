@@ -41,6 +41,20 @@ static void	first_vintersection(t_ray *ray, t_world *world, t_player *p)
 	ray->y = p->y + (p->x - ray->x) * tan(ray->a);
 }
 
+/*
+** distance between the player and the ray.
+*/
+double		distance(t_ray *r, t_player *p)
+{
+	double	dist;
+
+	if (is_piover2(r->a) || is_3piover2(r->a))
+		dist = fabs(p->y - r->y) / sin(r->a);
+	else
+		dist = fabs(p->x - r->x) / fabs(cos(r->a));
+	return (dist);
+}
+
 t_ray		*cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 {
 	int		wall;
@@ -63,6 +77,7 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 	}
 	if (wall == -1)
 		return (NULL);
+	rh->s = distance(rh, p);
 	return (rh);
 }
 
@@ -89,5 +104,6 @@ t_ray		*cast_vertical(t_world *world, t_player *p, t_ray *ray)
 	}
 	if (wall == -1)
 		return (NULL);
+	rv->s = distance(rv, p);
 	return (rv);
 }

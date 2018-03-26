@@ -19,12 +19,7 @@ void	draw_wallpiece(t_env *e, t_ray *ray, int x)
 	int		h;	  //height of the wall
 	int		y;    //window y coordinate
 
-	if (is_piover2(ray->a) || is_3piover2(ray->a))
-	{
-		dist = fabs(e->p->y - ray->y) / sin(ray->a);
-	}
-	else
-		dist = fabs(e->p->x - ray->x) / fabs(cos(ray->a));
+	dist = distance(ray, e->p);
 	b = ray->a - e->p->cov;
 	dist *= cos(b);
 	// printf("b is %f, cos(b) is %f, dist is: %f, ", b, cos(b), dist);
