@@ -23,6 +23,8 @@ char	**parse_file(char **argv, t_world *world)
 	fd = open(argv[1], O_RDONLY);
 	while (get_next_line(fd, &line) > 0)
 		i++;
+	if (get_next_line(fd, &line) == -1)
+		exit_error("Input file does not seem to exist.");
 	map = ft_memalloc(sizeof(char *) * (i + 1));
 	close(fd);
 	fd = open(argv[1], O_RDONLY);
@@ -31,5 +33,5 @@ char	**parse_file(char **argv, t_world *world)
 		map[i++] = ft_strcsplit(line, ' ');
 	world->w = ft_strlen(map[0]);
 	world->h = i;
-	return (map);	
+	return (map);
 }
