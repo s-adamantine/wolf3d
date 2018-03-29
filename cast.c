@@ -23,22 +23,36 @@ static int	check_wall(t_world *world, int x, int y)
 	return (0);
 }
 
-static void	first_hintersection(t_ray *ray, t_world *world, t_player *p)
+static t_ray	*first_hintersection(double a, t_world *world, t_player *p)
 {
-	ray->y = (ray->a > 0 && ray->a < M_PI) ? (int)(p->y / world->tile) * \
+	t_ray	*rh;
+
+	rh = ft_memalloc(sizeof(t_ray));
+	rh->a = a;
+	rh->y = (rh->a > 0 && rh->a < M_PI) ? (int)(p->y / world->tile) * \
 			 world->tile - 1 : (int)(p->y / world->tile) * world->tile + world->tile;
-	if (is_piover2(ray->a) || is_3piover2(ray->a))
-		ray->x = p->x;
+	if (is_piover2(rh->a) || is_3piover2(rh->a))
+		rh->x = p->x;
 	else
-		ray->x = p->x + (int)((p->y - ray->y) / tan(ray->a));
+		rh->x = p->x + (int)((p->y - rh->y) / tan(rh->a));
+	if (rh->x < 0 || rh->y < 0)
+		return (NULL);
+	return (rh);
 }
 
-static void	first_vintersection(t_ray *ray, t_world *world, t_player *p)
+static t_ray	*first_vintersection(double a, t_world *world, t_player *p)
 {
-	ray->x = (ray->a < (M_PI / 2) || ray->a > (3 * M_PI) / 2) ? \
+	t_ray	*rv;
+
+	rv = ft_memalloc(sizeof(t_ray));
+	rv->a = a;
+	rv->x = (rv->a < (M_PI / 2) || rv->a > (3 * M_PI) / 2) ? \
 		 (int)(p->x / world->tile) * world->tile + world->tile : \
 		 (int)(p->x / world->tile) * world->tile - 1;
-	ray->y = p->y + (p->x - ray->x) * tan(ray->a);
+	rv->y = p->y + (p->x - rv->x) * tan(rv->a);
+	if (rv->x < 0 || rv->y < 0)
+		return (NULL);
+	return (rv);
 }
 
 /*
@@ -49,7 +63,7 @@ double		distance(t_ray *r, t_player *p)
 	double	dist;
 
 	if (is_piover2(r->a) || is_3piover2(r->a))
-		dist = fabs(p->y - r->y) / sin(r->a);
+		dist = fabs(p->y - r->y) / fabs(sin(r->a));
 	else
 		dist = fabs(p->x - r->x) / fabs(cos(r->a));
 	return (dist);
@@ -60,9 +74,8 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 	int		wall;
 	t_ray	*rh;
 
-	rh = ft_memalloc(sizeof(t_ray));
-	rh->a = ray->a;
-	first_hintersection(rh, world, p);
+	if (!(rh = first_hintersection(ray->a, world, p)))
+		return (NULL);
 	while ((wall = check_wall(world, rh->x, rh->y)) == 0)
 	{
 		if (is_piover2(rh->a))
@@ -86,9 +99,8 @@ t_ray		*cast_vertical(t_world *world, t_player *p, t_ray *ray)
 	int		wall;
 	t_ray	*rv;
 
-	rv = ft_memalloc(sizeof(t_ray));
-	rv->a = ray->a;
-	first_vintersection(rv, world, p);
+	if (!(rv = first_vintersection(ray->a, world, p)))
+		return (NULL);
 	while ((wall = check_wall(world, rv->x, rv->y)) == 0)
 	{
 		if (is_zero(rv->a))

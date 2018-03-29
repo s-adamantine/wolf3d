@@ -38,7 +38,7 @@ static t_player		*setup_player(void)
 	t_player	*p;
 
 	p = ft_memalloc(sizeof(t_player));
-	p->x = 96;
+	p->x = 160;
 	p->y = 224;
 	p->h = 75;
 	p->d = 255;
