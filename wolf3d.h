@@ -31,6 +31,13 @@
 # define DOWN 125
 # define UP 126
 
+# define W 13
+# define A 0
+# define S 1
+# define D 2
+
+# define SPEED 10
+
 typedef struct	s_image
 {
 	int			bpp;
