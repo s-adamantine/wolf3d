@@ -17,9 +17,20 @@ void	clear_image(t_image *img)
 	ft_bzero(img->bitmap, img->sline * img->h);
 }
 
+void	print_text(t_env *e)
+{
+	mlx_string_put(e->mlx, e->wid, 640, 20, COLOR, ft_strjoin("cov: ", \
+		ft_itoa((int)(e->p->cov * (180 / M_PI)))));
+	mlx_string_put(e->mlx, e->wid, 640, 40, COLOR, ft_strjoin("x: ", \
+		ft_itoa((int)e->p->x)));
+	mlx_string_put(e->mlx, e->wid, 640, 60, COLOR, ft_strjoin("y: ", \
+		ft_itoa((int)e->p->y)));
+}
+
 void	print_image(t_env *e)
 {
 	mlx_put_image_to_window(e->mlx, e->wid, e->img->id, 0, 0);
+	print_text(e);
 	clear_image(e->img);
 }
 
