@@ -12,6 +12,19 @@
 
 #include "wolf3d.h"
 
+void	move_player(int keycode, t_env *e)
+{
+	if (keycode == W)
+		e->p->x += cos(e->r->a) * SPEED;
+	if (keycode == A)
+		e->p->y += sin(e->r->a) * SPEED;
+	if (keycode == S)
+		e->p->x -= cos(e->r->a) * SPEED;
+	if (keycode == D)
+		e->p->y -= sin(e->r->a) * SPEED;
+		render(e);
+}
+
 void	move_camera(int keycode, t_env *e)
 {
 	if (keycode == LEFT)
@@ -31,5 +44,7 @@ int		handle_keypress(int keycode, t_env *e)
 	}
 	if (keycode == LEFT || keycode == RIGHT || keycode == UP || keycode == DOWN)
 		move_camera(keycode, e);
+	if (keycode == W || keycode == A || keycode == S || keycode == D)
+		move_player(keycode, e);
 	return (0);
 }

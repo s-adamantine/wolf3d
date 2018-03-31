@@ -47,6 +47,15 @@ static t_player		*setup_player(void)
 	return (p);
 }
 
+static t_ray		*setup_ray(t_player *p)
+{
+	t_ray	*r;
+
+	r = ft_memalloc(sizeof(t_ray));
+	r->a = p->cov + (p->fov / 2);
+	return (r);
+}
+
 t_env				*setup_environment(int argc, char **argv)
 {
 	t_env	*e;
@@ -63,6 +72,7 @@ t_env				*setup_environment(int argc, char **argv)
 	e->img = new_image(e, e->win->w, e->win->h);
 	e->world = setup_world(argv);
 	e->p = setup_player();
+	e->r = setup_ray(e->p);
 	mlx_hook(e->wid, 2, 0, handle_keypress, e);
 	return (e);
 }

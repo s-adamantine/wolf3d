@@ -36,7 +36,7 @@
 # define S 1
 # define D 2
 
-# define SPEED 10
+# define SPEED 5
 
 typedef struct	s_image
 {
@@ -96,6 +96,7 @@ typedef struct	s_env
 	t_image		*img;
 	t_world		*world;
 	t_player	*p;
+	t_ray		*r;
 }				t_env;
 
 t_image			*new_image(t_env *e, int width, int height);

@@ -27,26 +27,24 @@ static double	constrain_cov(t_player *p)
 */
 void			render(t_env *e)
 {
-	t_ray	*ray;
 	t_ray	*rh;
 	t_ray	*rv;
 	int		x;
 
 	x = 0;
-	ray = ft_memalloc(sizeof(t_ray));
 	e->p->cov = constrain_cov(e->p);
-	ray->a = e->p->cov + (e->p->fov / 2);
-	while (ray->a > e->p->cov - (e->p->fov / 2))
+	e->r->a = e->p->cov + (e->p->fov / 2);
+	while (e->r->a > e->p->cov - (e->p->fov / 2))
 	{
-		if (angled(ray->a))
+		if (angled(e->r->a))
 		{
-			rv = cast_vertical(e->world, e->p, ray);
-			rh = cast_horizontal(e->world, e->p, ray);
+			rv = cast_vertical(e->world, e->p, e->r);
+			rh = cast_horizontal(e->world, e->p, e->r);
 			//needs to account for if rh or rv doesn't exist
 			if (rv && rh)
 			{
-				ray->x = (rh->s < rv->s) ? rh->x : rv->x;
-				ray->y = (rh->s < rv->s) ? rh->y : rv->y;
+				e->r->x = (rh->s < rv->s) ? rh->x : rv->x;
+				e->r->y = (rh->s < rv->s) ? rh->y : rv->y;
 			}
 			// else if (rv && !rh)
 			// {
@@ -59,13 +57,13 @@ void			render(t_env *e)
 			// 	ray->y = rh->y;
 			// }
 		}
-		else if (is_piover2(ray->a) || is_3piover2(ray->a))
-			cast_horizontal(e->world, e->p, ray);
-		else if (is_zero(ray->a) || is_pi(ray->a) || is_2pi(ray->a))
-			cast_vertical(e->world, e->p, ray);
-		ray->a -= e->p->fov / e->win->w;
-		if (ray->x && ray->y)
-			draw_wallpiece(e, ray, x);
+		else if (is_piover2(e->r->a) || is_3piover2(e->r->a))
+			cast_horizontal(e->world, e->p, e->r);
+		else if (is_zero(e->r->a) || is_pi(e->r->a) || is_2pi(e->r->a))
+			cast_vertical(e->world, e->p, e->r);
+		e->r->a -= e->p->fov / e->win->w;
+		if (e->r->x && e->r->y)
+			draw_wallpiece(e, e->r, x);
 		x++;
 	}
 	print_image(e);
