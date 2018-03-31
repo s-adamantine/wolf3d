@@ -15,14 +15,26 @@
 void	move_player(int keycode, t_env *e)
 {
 	if (keycode == W)
-		e->p->x += cos(e->r->a) * SPEED;
+	{
+		e->p->x += cos(e->p->cov) * SPEED;
+		e->p->y -= sin(e->p->cov) * SPEED;
+	}
 	if (keycode == A)
-		e->p->y += sin(e->r->a) * SPEED;
+	{
+		e->p->x -= sin(e->p->cov) * SPEED;
+		e->p->y -= cos(e->p->cov) * SPEED;
+	}
 	if (keycode == S)
-		e->p->x -= cos(e->r->a) * SPEED;
+	{
+		e->p->x -= cos(e->p->cov) * SPEED;
+		e->p->y += sin(e->p->cov) * SPEED;
+	}
 	if (keycode == D)
-		e->p->y -= sin(e->r->a) * SPEED;
-		render(e);
+	{
+		e->p->x += sin(e->p->cov) * SPEED;
+		e->p->y += cos(e->p->cov) * SPEED;
+	}
+	render(e);
 }
 
 void	move_camera(int keycode, t_env *e)
