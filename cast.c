@@ -78,15 +78,9 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 		return (NULL);
 	while ((wall = check_wall(world, rh->x, rh->y)) == 0)
 	{
-		if (is_piover2(rh->a))
-			rh->y -= world->tile;
-		else if (is_3piover2(rh->a))
-			rh->y += world->tile;
-		else
-		{
+		if (!is_piover2(rh->a) && !is_3piover2(rh->a))
 			rh->x += fabs(world->tile/tan(rh->a));
-			rh->y += (rh->a > 0 && rh->a < M_PI) ? -world->tile : world->tile;
-		}
+		rh->y += (rh->a > 0 && rh->a < M_PI) ? -world->tile : world->tile;
 	}
 	if (wall == -1)
 		return (NULL);
@@ -103,16 +97,10 @@ t_ray		*cast_vertical(t_world *world, t_player *p, t_ray *ray)
 		return (NULL);
 	while ((wall = check_wall(world, rv->x, rv->y)) == 0)
 	{
-		if (is_zero(rv->a))
-			rv->x += world->tile;
-		else if (is_pi(rv->a))
-			rv->x -= world->tile;
-		else
-		{
-			rv->x += (rv->a < (M_PI / 2) || rv->a > ((3 * M_PI) / 2)) ? \
-				world->tile : -world->tile;
+		if (!is_zero(rv->a) && !is_pi(rv->a))
 			rv->y += -world->tile * tan(rv->a);
-		}
+		rv->x += (rv->a < (M_PI / 2) || rv->a > ((3 * M_PI) / 2)) ? \
+				world->tile : -world->tile;
 	}
 	if (wall == -1)
 		return (NULL);
