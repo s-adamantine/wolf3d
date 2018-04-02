@@ -60,13 +60,7 @@ static t_ray	*first_vintersection(double a, t_world *world, t_player *p)
 */
 double		distance(t_ray *r, t_player *p)
 {
-	double	dist;
-
-	if (is_piover2(r->a) || is_3piover2(r->a))
-		dist = fabs(p->y - r->y) / fabs(sin(r->a));
-	else
-		dist = fabs(p->x - r->x) / fabs(cos(r->a));
-	return (dist);
+	return (sqrt(pow((p->x - r->x), 2) + pow((p->y - r->y), 2)));
 }
 
 t_ray		*cast_horizontal(t_world *world, t_player *p, t_ray *ray)

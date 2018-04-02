@@ -40,22 +40,23 @@ void			render(t_env *e)
 		{
 			rv = cast_vertical(e->world, e->p, e->r);
 			rh = cast_horizontal(e->world, e->p, e->r);
-			//needs to account for if rh or rv doesn't exist
 			if (rv && rh)
 			{
 				e->r->x = (rh->s < rv->s) ? rh->x : rv->x;
 				e->r->y = (rh->s < rv->s) ? rh->y : rv->y;
 			}
-			// else if (rv && !rh)
-			// {
-			// 	ray->x = rv->x;
-			// 	ray->y = rv->y;
-			// }
-			// else if (rh && !rv)
-			// {
-			// 	ray->x = rh->x;
-			// 	ray->y = rh->y;
-			// }
+			else if (!rh && rv)
+			{
+				e->r->x = rv->x;
+				e->r->y = rv->y;
+			}
+			else if (!rv && rh)
+			{
+				e->r->x = rh->x;
+				e->r->y = rh->y;
+			}
+			else
+				break;
 		}
 		else if (is_piover2(e->r->a) || is_3piover2(e->r->a))
 			cast_horizontal(e->world, e->p, e->r);

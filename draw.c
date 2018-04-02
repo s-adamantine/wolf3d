@@ -22,9 +22,7 @@ void	draw_wallpiece(t_env *e, t_ray *ray, int x)
 	dist = distance(ray, e->p);
 	b = ray->a - e->p->cov;
 	dist *= cos(b);
-	// printf("b is %f, cos(b) is %f, dist is: %f, ", b, cos(b), dist);
 	h = (int)((e->world->wall_h / dist) * e->p->d) + 1; //you can precompute w->wall_h / p->d bc that's always the same
-	// printf("h is %d\n", h);
 	y = (e->win->h / 2) - (h/2); //the first coordinate that you want to write in
 	while (h--)
 		insert_bitmap(e->img, x, y++, COLOR);
