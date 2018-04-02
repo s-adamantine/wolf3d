@@ -41,20 +41,11 @@ void			render(t_env *e)
 			rv = cast_vertical(e->world, e->p, e->r);
 			rh = cast_horizontal(e->world, e->p, e->r);
 			if (rv && rh)
-			{
-				e->r->x = (rh->s < rv->s) ? rh->x : rv->x;
-				e->r->y = (rh->s < rv->s) ? rh->y : rv->y;
-			}
+				e->r = (rh->s < rv->s) ? rh : rv;
 			else if (!rh && rv)
-			{
-				e->r->x = rv->x;
-				e->r->y = rv->y;
-			}
+				e->r = rv;
 			else if (!rv && rh)
-			{
-				e->r->x = rh->x;
-				e->r->y = rh->y;
-			}
+				e->r = rh;
 			else
 				break;
 		}
