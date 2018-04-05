@@ -36,27 +36,18 @@ void			render(t_env *e)
 	e->r->a = e->p->cov + (e->p->fov / 2);
 	while (e->r->a > e->p->cov - (e->p->fov / 2))
 	{
-		if (angled(e->r->a))
-		{
-			rv = cast_vertical(e->world, e->p, e->r);
-			rh = cast_horizontal(e->world, e->p, e->r);
-			if (rv && rh)
-				e->r = (rh->s < rv->s) ? rh : rv;
-			else if (!rh && rv)
-				e->r = rv;
-			else if (!rv && rh)
-				e->r = rh;
-			else
-				break;
-		}
-		else if (is_piover2(e->r->a) || is_3piover2(e->r->a))
-			cast_horizontal(e->world, e->p, e->r);
-		else if (is_zero(e->r->a) || is_pi(e->r->a) || is_2pi(e->r->a))
-			cast_vertical(e->world, e->p, e->r);
+		rv = cast_vertical(e->world, e->p, e->r);
+		rh = cast_horizontal(e->world, e->p, e->r);
+		if (rv && rh)
+			e->r = (rh->s < rv->s) ? rh : rv;
+		else if (!rh && rv)
+			e->r = rv;
+		else if (!rv && rh)
+			e->r = rh;
+		else
+			break;
 		e->r->a -= e->p->fov / e->win->w;
-		if (e->r->x && e->r->y)
-			draw_wallpiece(e, e->r, x);
-		x++;
+		draw_wallpiece(e, e->r, x++);
 	}
 	print_image(e);
 }
