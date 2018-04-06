@@ -107,6 +107,7 @@ t_env			*setup_environment(int argc, char **argv);
 void			exit_error(char *str);
 void			render(t_env *e);
 void			draw_wallpiece(t_env *e, t_ray *ray, int x);
+void			draw_midpoint(t_env *e);
 int				handle_keypress(int keycode, t_env *e);
 char			**parse_file(char **argv, t_world *world);
 
@@ -119,5 +120,6 @@ int				angled(double value);
 
 double			distance(t_ray *r, t_player *p);
 
-t_ray			*cast_horizontal(t_world *world, t_player *p, double angle);
-t_ray			*cast_vertical(t_world *world, t_player *p, double angle);
+t_ray			*cast_horizontal(t_world *world, t_player *p, double angle, \
+	int xc);
+t_ray			*cast_vertical(t_world *world, t_player *p, double angle, int xc);

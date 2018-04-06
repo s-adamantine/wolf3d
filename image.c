@@ -29,6 +29,7 @@ void	print_text(t_env *e)
 
 void	print_image(t_env *e)
 {
+	draw_midpoint(e);
 	mlx_put_image_to_window(e->mlx, e->wid, e->img->id, 0, 0);
 	print_text(e);
 	clear_image(e->img);

@@ -12,6 +12,17 @@
 
 #include "wolf3d.h"
 
+void			draw_midpoint(t_env *e)
+{
+	int	y;
+	int	h;
+
+	y = 325;
+	h = 100;
+	while (h--)
+		insert_bitmap(e->img, 375, y++, 0x00FF0000);
+}
+
 void	draw_wallpiece(t_env *e, t_ray *ray, int x)
 {
 	double	dist; //distance from person to wall

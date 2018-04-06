@@ -37,8 +37,8 @@ void			render(t_env *e)
 	angle = e->p->cov + (e->p->fov / 2);
 	while (angle > e->p->cov - (e->p->fov / 2))
 	{
-		rv = cast_vertical(e->world, e->p, angle);
-		rh = cast_horizontal(e->world, e->p, angle);
+		rv = cast_vertical(e->world, e->p, angle, x);
+		rh = cast_horizontal(e->world, e->p, angle, x);
 		if (rv && rh)
 			e->r = (rh->s < rv->s) ? rh : rv;
 		else if (!rh && rv)

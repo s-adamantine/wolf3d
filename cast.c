@@ -12,14 +12,19 @@
 
 #include "wolf3d.h"
 
-static int	check_wall(t_world *world, int x, int y)
+static int	check_wall(t_world *world, int x, int y, int xc)
 {
 	if (x < 0 || y < 0)
 		return (-1);
 	if (x >= (world->w * world->tile) || y >= (world->h * world->tile))
 		return (-1);
 	if (world->map[y / world->tile][x / world->tile] == 'x')
+	{
+		if (xc == 375)
+			printf("found a wall at x: %d, and y: %d\n", (int) x / world->tile, \
+		(int) y / world->tile);
 		return (1);
+	}
 	return (0);
 }
 
@@ -63,14 +68,14 @@ double		distance(t_ray *r, t_player *p)
 	return (sqrt(pow((p->x - r->x), 2) + pow((p->y - r->y), 2)));
 }
 
-t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
+t_ray		*cast_horizontal(t_world *world, t_player *p, double angle, int xc)
 {
 	int		wall;
 	t_ray	*rh;
 
 	if (!(rh = first_hintersection(angle, world, p)))
 		return (NULL);
-	while ((wall = check_wall(world, rh->x, rh->y)) == 0)
+	while ((wall = check_wall(world, rh->x, rh->y, xc)) == 0)
 	{
 		if (!is_piover2(rh->a) && !is_3piover2(rh->a))
 			rh->x += fabs(world->tile/tan(rh->a));
@@ -82,14 +87,14 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
 	return (rh);
 }
 
-t_ray		*cast_vertical(t_world *world, t_player *p, double angle)
+t_ray		*cast_vertical(t_world *world, t_player *p, double angle, int xc)
 {
 	int		wall;
 	t_ray	*rv;
 
 	if (!(rv = first_vintersection(angle, world, p)))
 		return (NULL);
-	while ((wall = check_wall(world, rv->x, rv->y)) == 0)
+	while ((wall = check_wall(world, rv->x, rv->y, xc)) == 0)
 	{
 		if (!is_zero(rv->a) && !is_pi(rv->a))
 			rv->y += -world->tile * tan(rv->a);
