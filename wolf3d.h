@@ -119,5 +119,5 @@ int				angled(double value);
 
 double			distance(t_ray *r, t_player *p);
 
-t_ray			*cast_horizontal(t_world *world, t_player *p, t_ray *ray);
-t_ray			*cast_vertical(t_world *world, t_player *p, t_ray *ray);
+t_ray			*cast_horizontal(t_world *world, t_player *p, double angle);
+t_ray			*cast_vertical(t_world *world, t_player *p, double angle);

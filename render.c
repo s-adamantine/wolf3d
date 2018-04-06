@@ -30,14 +30,15 @@ void			render(t_env *e)
 	t_ray	*rh;
 	t_ray	*rv;
 	int		x;
+	double	angle;
 
 	x = 0;
 	e->p->cov = constrain_cov(e->p);
-	e->r->a = e->p->cov + (e->p->fov / 2);
-	while (e->r->a > e->p->cov - (e->p->fov / 2))
+	angle = e->p->cov + (e->p->fov / 2);
+	while (angle > e->p->cov - (e->p->fov / 2))
 	{
-		rv = cast_vertical(e->world, e->p, e->r);
-		rh = cast_horizontal(e->world, e->p, e->r);
+		rv = cast_vertical(e->world, e->p, angle);
+		rh = cast_horizontal(e->world, e->p, angle);
 		if (rv && rh)
 			e->r = (rh->s < rv->s) ? rh : rv;
 		else if (!rh && rv)
@@ -45,8 +46,8 @@ void			render(t_env *e)
 		else if (!rv && rh)
 			e->r = rh;
 		else
-			break;
-		e->r->a -= e->p->fov / e->win->w;
+			e->r = NULL;
+		angle -= e->p->fov / e->win->w;
 		draw_wallpiece(e, e->r, x++);
 	}
 	print_image(e);

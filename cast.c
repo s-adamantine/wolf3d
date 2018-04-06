@@ -63,12 +63,12 @@ double		distance(t_ray *r, t_player *p)
 	return (sqrt(pow((p->x - r->x), 2) + pow((p->y - r->y), 2)));
 }
 
-t_ray		*cast_horizontal(t_world *world, t_player *p, t_ray *ray)
+t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
 {
 	int		wall;
 	t_ray	*rh;
 
-	if (!(rh = first_hintersection(ray->a, world, p)))
+	if (!(rh = first_hintersection(angle, world, p)))
 		return (NULL);
 	while ((wall = check_wall(world, rh->x, rh->y)) == 0)
 	{
@@ -82,12 +82,12 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, t_ray *ray)
 	return (rh);
 }
 
-t_ray		*cast_vertical(t_world *world, t_player *p, t_ray *ray)
+t_ray		*cast_vertical(t_world *world, t_player *p, double angle)
 {
 	int		wall;
 	t_ray	*rv;
 
-	if (!(rv = first_vintersection(ray->a, world, p)))
+	if (!(rv = first_vintersection(angle, world, p)))
 		return (NULL);
 	while ((wall = check_wall(world, rv->x, rv->y)) == 0)
 	{
