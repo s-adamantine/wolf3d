@@ -14,17 +14,15 @@
 
 static int	check_wall(t_world *world, int x, int y, int xc)
 {
+	if (xc == 375)
+		printf("testing at x: %d, and y: %d\n", (int) x / world->tile, \
+	(int) y / world->tile);
 	if (x < 0 || y < 0)
 		return (-1);
 	if (x >= (world->w * world->tile) || y >= (world->h * world->tile))
 		return (-1);
 	if (world->map[y / world->tile][x / world->tile] == 'x')
-	{
-		if (xc == 375)
-			printf("found a wall at x: %d, and y: %d\n", (int) x / world->tile, \
-		(int) y / world->tile);
 		return (1);
-	}
 	return (0);
 }
 
@@ -98,7 +96,8 @@ t_ray		*cast_vertical(t_world *world, t_player *p, double angle, int xc)
 	while ((wall = check_wall(world, rv->x, rv->y, xc)) == 0)
 	{
 		if (!is_zero(rv->a) && !is_pi(rv->a))
-			rv->y += -world->tile * tan(rv->a);
+			rv->y += (rv->a > 0 && rv->a < M_PI) ? -world->tile * \
+				fabs(tan(rv->a)) : world->tile * fabs(tan(rv->a));
 		rv->x += (rv->a < (M_PI / 2) || rv->a > ((3 * M_PI) / 2)) ? \
 				world->tile : -world->tile;
 	}
