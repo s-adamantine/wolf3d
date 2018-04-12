@@ -78,8 +78,9 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle, int xc)
 	while ((wall = check_wall(world, rh->x, rh->y, xc)) == 0)
 	{
 		if (!is_piover2(rh->a) && !is_3piover2(rh->a))
-			rh->x += fabs(world->tile/tan(rh->a));
-		rh->y += (rh->a > 0 && rh->a < M_PI) ? -world->tile : world->tile;
+			rh->x += (rh->a >= 0 && rh->a <= M_PI) ? world->tile/tan(rh->a) : \
+				-world->tile/tan(rh->a);
+		rh->y += (rh->a >= 0 && rh->a <= M_PI) ? -world->tile : world->tile;
 	}
 	if (wall == -1)
 		return (NULL);
