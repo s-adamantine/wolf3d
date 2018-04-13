@@ -26,7 +26,10 @@ static int	check_wall(t_world *world, int x, int y, int xc)
 	return (0);
 }
 
-static t_ray	*first_hintersection(double a, t_world *world, t_player *p)
+/*
+** returns negative intersections if there
+*/
+static t_ray	*get_first_hint(double a, t_world *world, t_player *p)
 {
 	t_ray	*rh;
 
@@ -38,12 +41,10 @@ static t_ray	*first_hintersection(double a, t_world *world, t_player *p)
 		rh->x = p->x;
 	else
 		rh->x = p->x + (int)((p->y - rh->y) / tan(rh->a));
-	if (rh->x < 0 || rh->y < 0)
-		return (NULL);
 	return (rh);
 }
 
-static t_ray	*first_vintersection(double a, t_world *world, t_player *p)
+static t_ray	*get_first_vint(double a, t_world *world, t_player *p)
 {
 	t_ray	*rv;
 
@@ -53,8 +54,6 @@ static t_ray	*first_vintersection(double a, t_world *world, t_player *p)
 		 (int)(p->x / world->tile) * world->tile + world->tile : \
 		 (int)(p->x / world->tile) * world->tile - 1;
 	rv->y = p->y + (p->x - rv->x) * tan(rv->a);
-	if (rv->x < 0 || rv->y < 0)
-		return (NULL);
 	return (rv);
 }
 
@@ -73,8 +72,7 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle, int xc)
 	int		dy;
 	t_ray	*rh;
 
-	if (!(rh = first_hintersection(angle, world, p)))
-		return (NULL);
+	rh = get_first_hint(angle, world, p);
 	dx = world->tile/tan(rh->a);
 	dy = world->tile;
 	while ((wall = check_wall(world, rh->x, rh->y, xc)) == 0)
@@ -96,8 +94,7 @@ t_ray		*cast_vertical(t_world *world, t_player *p, double angle, int xc)
 	int		dy;
 	t_ray	*rv;
 
-	if (!(rv = first_vintersection(angle, world, p)))
-		return (NULL);
+	rv = get_first_vint(angle, world, p);
 	dx = world->tile;
 	dy = world->tile * fabs(tan(rv->a));
 	while ((wall = check_wall(world, rv->x, rv->y, xc)) == 0)
