@@ -37,10 +37,7 @@ static t_ray	*get_first_hint(double a, t_world *world, t_player *p)
 	rh->a = a;
 	rh->y = (int)(p->y / world->tile) * world->tile;
 	rh->y += (tophalf(rh->a) == 1) ? - 1 : world->tile;
-	if (is_piover2(rh->a) || is_3piover2(rh->a))
-		rh->x = p->x;
-	else
-		rh->x = p->x + (int)((p->y - rh->y) / tan(rh->a));
+	rh->x = p->x + (int)((p->y - rh->y) / tan(rh->a));
 	return (rh);
 }
 
@@ -77,8 +74,7 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle, int xc)
 	dy = world->tile;
 	while ((wall = check_wall(world, rh->x, rh->y, xc)) == 0)
 	{
-		if (!is_piover2(rh->a) && !is_3piover2(rh->a))
-			rh->x += (tophalf(rh->a) == 1) ? dx : -dx;
+		rh->x += (tophalf(rh->a) == 1) ? dx : -dx;
 		rh->y += (tophalf(rh->a)) ? -dy : dy;
 	}
 	if (wall == -1)
@@ -99,8 +95,7 @@ t_ray		*cast_vertical(t_world *world, t_player *p, double angle, int xc)
 	dy = world->tile * fabs(tan(rv->a));
 	while ((wall = check_wall(world, rv->x, rv->y, xc)) == 0)
 	{
-		if (!is_zero(rv->a) && !is_pi(rv->a))
-			rv->y += (tophalf(rv->a) == 1) ? -dy : dy;
+		rv->y += (tophalf(rv->a) == 1) ? -dy : dy;
 		rv->x += (rv->a < (M_PI / 2) || rv->a > ((3 * M_PI) / 2)) ? dx : -dx;
 	}
 	if (wall == -1)
