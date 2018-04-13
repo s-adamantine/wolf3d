@@ -31,7 +31,7 @@ void	draw_wallpiece(t_env *e, t_ray *ray, int x)
 
 	if (!ray)
 		return ;
-	dist = distance(ray, e->p) * cos(ray->a - e->p->cov);
+	dist = ray->s * cos(ray->a - e->p->cov);
 	h = (int)((e->world->wall_h / dist) * e->p->d) + 1; //you can precompute w->wall_h / p->d bc that's always the same
 	y = (e->win->h / 2) - (h/2); //the first coordinate that you want to write in
 	while (h--)
