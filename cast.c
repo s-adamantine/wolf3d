@@ -77,10 +77,8 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle, int xc)
 		rh->x += tophalf(rh->a) ? dx : -dx;
 		rh->y += tophalf(rh->a) ? -dy : dy;
 	}
-	if (wall == -1)
-		return (NULL);
 	rh->s = distance(rh, p);
-	return (rh);
+	return ((wall == 1) ? rh : NULL);
 }
 
 t_ray		*cast_vertical(t_world *world, t_player *p, double angle, int xc)
@@ -98,8 +96,6 @@ t_ray		*cast_vertical(t_world *world, t_player *p, double angle, int xc)
 		rv->y += tophalf(rv->a) ? -dy : dy;
 		rv->x += righthalf(rv->a) ? dx : -dx;
 	}
-	if (wall == -1)
-		return (NULL);
 	rv->s = distance(rv, p);
-	return (rv);
+	return ((wall == 1) ? rv : NULL);
 }
