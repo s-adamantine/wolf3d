@@ -39,16 +39,9 @@ void			render(t_env *e)
 	{
 		rv = cast_vertical(e->world, e->p, angle, x);
 		rh = cast_horizontal(e->world, e->p, angle, x);
-		if (rv && rh)
-			e->r = (rh->s < rv->s) ? rh : rv;
-		else if (!rh && rv)
-			e->r = rv;
-		else if (!rv && rh)
-			e->r = rh;
-		else
-			e->r = NULL;
-		angle -= e->p->fov / e->win->w;
+		e->r = (rh->s < rv->s) ? rh : rv;
 		draw_wallpiece(e, e->r, x++);
+		angle -= e->p->fov / e->win->w;
 	}
 	print_image(e);
 }

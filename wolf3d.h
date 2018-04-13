@@ -13,6 +13,7 @@
 #include <fcntl.h>
 #include <math.h>
 #include <stdio.h>
+#include <limits.h>
 
 #include "libft.h"
 #include "mlx.h"
