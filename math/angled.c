@@ -19,3 +19,19 @@ int			angled(double value)
 		return (0);
 	return (1);
 }
+
+int			tophalf(double value)
+{
+	if (value > 0 && value < M_PI)
+		return (1);
+	if (value > (2 * M_PI) && value < (3 * M_PI))
+		return (1);
+	return (0);
+}
+
+int			q1(double value)
+{
+	if (value >= 0 && value <= (M_PI / 2))
+		return (1);
+	return (0);
+}

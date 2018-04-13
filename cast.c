@@ -32,8 +32,9 @@ static t_ray	*first_hintersection(double a, t_world *world, t_player *p)
 
 	rh = ft_memalloc(sizeof(t_ray));
 	rh->a = a;
-	rh->y = (rh->a > 0 && rh->a < M_PI) ? (int)(p->y / world->tile) * \
-			 world->tile - 1 : (int)(p->y / world->tile) * world->tile + world->tile;
+	rh->y = (tophalf(rh->a) == 1) ? (int)(p->y / world->tile) * \
+			 world->tile - 1 : (int)(p->y / world->tile) * world->tile + \
+			 world->tile;
 	if (is_piover2(rh->a) || is_3piover2(rh->a))
 		rh->x = p->x;
 	else
@@ -76,9 +77,9 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle, int xc)
 	while ((wall = check_wall(world, rh->x, rh->y, xc)) == 0)
 	{
 		if (!is_piover2(rh->a) && !is_3piover2(rh->a))
-			rh->x += (rh->a >= 0 && rh->a <= M_PI) ? world->tile/tan(rh->a) : \
+			rh->x += (tophalf(rh->a) == 1) ? world->tile/tan(rh->a) : \
 				-world->tile/tan(rh->a);
-		rh->y += (rh->a >= 0 && rh->a <= M_PI) ? -world->tile : world->tile;
+		rh->y += (tophalf(rh->a)) ? -world->tile : world->tile;
 	}
 	if (wall == -1)
 		return (NULL);
@@ -96,7 +97,7 @@ t_ray		*cast_vertical(t_world *world, t_player *p, double angle, int xc)
 	while ((wall = check_wall(world, rv->x, rv->y, xc)) == 0)
 	{
 		if (!is_zero(rv->a) && !is_pi(rv->a))
-			rv->y += (rv->a > 0 && rv->a < M_PI) ? -world->tile * \
+			rv->y += (tophalf(rv->a) == 1) ? -world->tile * \
 				fabs(tan(rv->a)) : world->tile * fabs(tan(rv->a));
 		rv->x += (rv->a < (M_PI / 2) || rv->a > ((3 * M_PI) / 2)) ? \
 				world->tile : -world->tile;
