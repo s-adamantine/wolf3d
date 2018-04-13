@@ -111,12 +111,6 @@ void			draw_midpoint(t_env *e);
 int				handle_keypress(int keycode, t_env *e);
 char			**parse_file(char **argv, t_world *world);
 
-int				is_zero(double value);
-int				is_piover2(double value);
-int				is_pi(double value);
-int				is_3piover2(double value);
-int				is_2pi(double value);
-int				angled(double value);
 int				tophalf(double value);
 int				righthalf(double value);
 
