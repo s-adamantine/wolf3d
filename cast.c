@@ -36,7 +36,7 @@ static t_ray	*get_first_hint(double a, t_world *world, t_player *p)
 	rh = ft_memalloc(sizeof(t_ray));
 	rh->a = a;
 	rh->y = (int)(p->y / world->tile) * world->tile;
-	rh->y += (tophalf(rh->a) == 1) ? - 1 : world->tile;
+	rh->y += tophalf(rh->a) ? - 1 : world->tile;
 	rh->x = p->x + (int)((p->y - rh->y) / tan(rh->a));
 	return (rh);
 }
@@ -47,7 +47,7 @@ static t_ray	*get_first_vint(double a, t_world *world, t_player *p)
 
 	rv = ft_memalloc(sizeof(t_ray));
 	rv->a = a;
-	rv->x = (rv->a < (M_PI / 2) || rv->a > (3 * M_PI) / 2) ? \
+	rv->x = righthalf(rv->a) ?
 		 (int)(p->x / world->tile) * world->tile + world->tile : \
 		 (int)(p->x / world->tile) * world->tile - 1;
 	rv->y = p->y + (p->x - rv->x) * tan(rv->a);
@@ -72,10 +72,10 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle, int xc)
 	rh = get_first_hint(angle, world, p);
 	dx = world->tile/tan(rh->a);
 	dy = world->tile;
-	while ((wall = check_wall(world, rh->x, rh->y, xc)) == 0)
+	while (!(wall = check_wall(world, rh->x, rh->y, xc)))
 	{
-		rh->x += (tophalf(rh->a) == 1) ? dx : -dx;
-		rh->y += (tophalf(rh->a)) ? -dy : dy;
+		rh->x += tophalf(rh->a) ? dx : -dx;
+		rh->y += tophalf(rh->a) ? -dy : dy;
 	}
 	if (wall == -1)
 		return (NULL);
@@ -93,10 +93,10 @@ t_ray		*cast_vertical(t_world *world, t_player *p, double angle, int xc)
 	rv = get_first_vint(angle, world, p);
 	dx = world->tile;
 	dy = world->tile * fabs(tan(rv->a));
-	while ((wall = check_wall(world, rv->x, rv->y, xc)) == 0)
+	while (!(wall = check_wall(world, rv->x, rv->y, xc)))
 	{
-		rv->y += (tophalf(rv->a) == 1) ? -dy : dy;
-		rv->x += (rv->a < (M_PI / 2) || rv->a > ((3 * M_PI) / 2)) ? dx : -dx;
+		rv->y += tophalf(rv->a) ? -dy : dy;
+		rv->x += righthalf(rv->a) ? dx : -dx;
 	}
 	if (wall == -1)
 		return (NULL);

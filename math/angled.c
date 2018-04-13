@@ -29,6 +29,13 @@ int			tophalf(double value)
 	return (0);
 }
 
+int			righthalf(double value)
+{
+	if (value < (M_PI / 2) || value > ((3 * M_PI) / 2))
+		return (1);
+	return (0);
+}
+
 int			q1(double value)
 {
 	if (value >= 0 && value <= (M_PI / 2))

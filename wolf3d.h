@@ -118,6 +118,7 @@ int				is_3piover2(double value);
 int				is_2pi(double value);
 int				angled(double value);
 int				tophalf(double value);
+int				righthalf(double value);
 
 double			distance(t_ray *r, t_player *p);
 
