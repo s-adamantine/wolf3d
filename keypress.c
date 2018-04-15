@@ -12,32 +12,31 @@
 
 #include "wolf3d.h"
 
-void	move_player(int keycode, t_env *e)
+static int		insidewall(t_world *world, double x, double y)
 {
-	if (keycode == W)
-	{
-		e->p->x += cos(e->p->cov) * SPEED;
-		e->p->y -= sin(e->p->cov) * SPEED;
-	}
-	if (keycode == A)
-	{
-		e->p->x -= sin(e->p->cov) * SPEED;
-		e->p->y -= cos(e->p->cov) * SPEED;
-	}
-	if (keycode == S)
-	{
-		e->p->x -= cos(e->p->cov) * SPEED;
-		e->p->y += sin(e->p->cov) * SPEED;
-	}
-	if (keycode == D)
-	{
-		e->p->x += sin(e->p->cov) * SPEED;
-		e->p->y += cos(e->p->cov) * SPEED;
-	}
-	render(e);
+	if (world->map[(int)y / world->tile][(int)x / world->tile] == 'x')
+		return (1);
+	return (0);
 }
 
-void	move_camera(int keycode, t_env *e)
+void			move_player(int keycode, t_env *e)
+{
+	double	dx;
+	double	dy;
+
+	dx = (keycode == W || keycode == S) ? cos(e->p->cov) : sin(e->p->cov);
+	dx *= (keycode == W || keycode == D) ? SPEED : -SPEED;
+	dy = (keycode == W || keycode == S) ? sin(e->p->cov) : cos(e->p->cov);
+	dy *= (keycode == W || keycode == A) ? -SPEED : SPEED;
+	if (!insidewall(e->world, e->p->x + dx, e->p->y + dy)) //if the next movement will cause you to go in a wall
+	{
+		e->p->x += dx;
+		e->p->y += dy;
+		render(e);
+	}
+}
+
+void			move_camera(int keycode, t_env *e)
 {
 	if (keycode == LEFT)
 		e->p->cov += 10 * (M_PI / 180);
@@ -47,7 +46,7 @@ void	move_camera(int keycode, t_env *e)
 	render(e);
 }
 
-int		handle_keypress(int keycode, t_env *e)
+int				handle_keypress(int keycode, t_env *e)
 {
 	if (keycode == ESC)
 	{

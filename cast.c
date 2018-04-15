@@ -12,11 +12,8 @@
 
 #include "wolf3d.h"
 
-static int	check_wall(t_world *world, int x, int y, int xc)
+static int	check_wall(t_world *world, int x, int y)
 {
-	if (xc == 375)
-		printf("testing at x: %d, and y: %d\n", (int) x / world->tile, \
-	(int) y / world->tile);
 	if (x < 0 || y < 0)
 		return (-1);
 	if (x >= (world->w * world->tile) || y >= (world->h * world->tile))
@@ -26,9 +23,6 @@ static int	check_wall(t_world *world, int x, int y, int xc)
 	return (0);
 }
 
-/*
-** returns negative intersections if there
-*/
 static t_ray	*get_first_hint(double a, t_world *world, t_player *p)
 {
 	t_ray	*rh;
@@ -54,15 +48,12 @@ static t_ray	*get_first_vint(double a, t_world *world, t_player *p)
 	return (rv);
 }
 
-/*
-** distance between the player and the ray.
-*/
 double		distance(t_ray *r, t_player *p)
 {
 	return (sqrt(pow((p->x - r->x), 2) + pow((p->y - r->y), 2)));
 }
 
-t_ray		*cast_horizontal(t_world *world, t_player *p, double angle, int xc)
+t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
 {
 	int		wall;
 	int		dx;
@@ -72,7 +63,7 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle, int xc)
 	rh = get_first_hint(angle, world, p);
 	dx = world->tile/tan(rh->a);
 	dy = world->tile;
-	while (!(wall = check_wall(world, rh->x, rh->y, xc)))
+	while (!(wall = check_wall(world, rh->x, rh->y)))
 	{
 		rh->x += tophalf(rh->a) ? dx : -dx;
 		rh->y += tophalf(rh->a) ? -dy : dy;
@@ -81,7 +72,7 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle, int xc)
 	return (rh);
 }
 
-t_ray		*cast_vertical(t_world *world, t_player *p, double angle, int xc)
+t_ray		*cast_vertical(t_world *world, t_player *p, double angle)
 {
 	int		wall;
 	int		dx;
@@ -91,7 +82,7 @@ t_ray		*cast_vertical(t_world *world, t_player *p, double angle, int xc)
 	rv = get_first_vint(angle, world, p);
 	dx = world->tile;
 	dy = world->tile * fabs(tan(rv->a));
-	while (!(wall = check_wall(world, rv->x, rv->y, xc)))
+	while (!(wall = check_wall(world, rv->x, rv->y)))
 	{
 		rv->y += tophalf(rv->a) ? -dy : dy;
 		rv->x += righthalf(rv->a) ? dx : -dx;
