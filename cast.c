@@ -31,7 +31,7 @@ static t_ray	*get_first_hint(double a, t_world *world, t_player *p)
 	rh->a = a;
 	rh->y = (int)(p->y / world->tile) * world->tile;
 	rh->y += tophalf(rh->a) ? - 1 : world->tile;
-	rh->x = p->x + (int)((p->y - rh->y) / tan(rh->a));
+	rh->x = p->x + (int)(p->y - rh->y) / tan(rh->a);
 	return (rh);
 }
 
