@@ -28,12 +28,11 @@ void			move_player(int keycode, t_env *e)
 	dx *= (keycode == W || keycode == D) ? SPEED : -SPEED;
 	dy = (keycode == W || keycode == S) ? sin(e->p->cov) : cos(e->p->cov);
 	dy *= (keycode == W || keycode == A) ? -SPEED : SPEED;
-	if (!insidewall(e->world, e->p->x + dx, e->p->y + dy)) //if the next movement will cause you to go in a wall
-	{
+	if (!insidewall(e->world, e->p->x + dx, e->p->y))
 		e->p->x += dx;
+	if (!insidewall(e->world, e->p->x, e->p->y + dy))
 		e->p->y += dy;
-		render(e);
-	}
+	render(e);
 }
 
 void			move_camera(int keycode, t_env *e)
