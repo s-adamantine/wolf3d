@@ -53,6 +53,15 @@ double		distance(t_ray *r, t_player *p)
 	return (sqrt(pow((p->x - r->x), 2) + pow((p->y - r->y), 2)));
 }
 
+double		fix_the_numbers(double fix_me) {
+	double remainder = (int)fix_me % 64;
+
+	if (remainder) {
+		return fix_me + 1;
+	}
+	return fix_me;
+}
+
 t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
 {
 	int		wall;
@@ -68,6 +77,8 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
 		rh->x += tophalf(rh->a) ? dx : -dx;
 		rh->y += tophalf(rh->a) ? -dy : dy;
 	}
+	rh->y = fix_the_numbers(rh->y);
+	if (sharfy) printf("hori: %f, %f\n", rh->x, rh->y);
 	rh->s = (wall == 1) ? distance(rh, p) : INT_MAX;
 	return (rh);
 }
@@ -87,6 +98,8 @@ t_ray		*cast_vertical(t_world *world, t_player *p, double angle)
 		rv->y += tophalf(rv->a) ? -dy : dy;
 		rv->x += righthalf(rv->a) ? dx : -dx;
 	}
+	rv->x = fix_the_numbers(rv->x);
+	if (sharfy) printf("vert: %f, %f\n", rv->x, rv->y);
 	rv->s = (wall == 1) ? distance(rv, p) : INT_MAX;
 	return (rv);
 }

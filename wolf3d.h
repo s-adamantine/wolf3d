@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef WOLF3D_H
+# define WOLF3D_H
+
 #include <fcntl.h>
 #include <math.h>
 #include <stdio.h>
@@ -100,6 +103,8 @@ typedef struct	s_env
 	t_ray		*r;
 }				t_env;
 
+extern int 			sharfy;
+
 t_image			*new_image(t_env *e, int width, int height);
 void			insert_bitmap(t_image *image, int x, int y, int color);
 void			print_image(t_env *);
@@ -119,3 +124,5 @@ double			distance(t_ray *r, t_player *p);
 
 t_ray			*cast_horizontal(t_world *world, t_player *p, double angle);
 t_ray			*cast_vertical(t_world *world, t_player *p, double angle);
+
+#endif
