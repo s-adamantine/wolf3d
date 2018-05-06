@@ -12,13 +12,14 @@
 
 #include "wolf3d.h"
 
-static int	check_wall(t_world *world, int x, int y)
+static int	check_wall(t_world *world, double x, double y)
 {
+	if (sharfy) printf("check_wall x, y: %f, %f\n", x, y);
 	if (x < 0 || y < 0)
 		return (-1);
 	if (x >= (world->w * world->tile) || y >= (world->h * world->tile))
 		return (-1);
-	if (world->map[y / world->tile][x / world->tile] == 'x')
+	if (world->map[(int)y / world->tile][(int)x / world->tile] == 'x')
 		return (1);
 	return (0);
 }
@@ -31,7 +32,7 @@ static t_ray	*get_first_hint(double a, t_world *world, t_player *p)
 	rh->a = a;
 	rh->y = (int)(p->y / world->tile) * world->tile;
 	rh->y += tophalf(rh->a) ? - 1 : world->tile;
-	rh->x = p->x + (int)(p->y - rh->y) / tan(rh->a);
+	rh->x = p->x + (p->y - rh->y) / tan(rh->a);
 	return (rh);
 }
 
@@ -65,8 +66,8 @@ double		fix_the_numbers(double fix_me) {
 t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
 {
 	int		wall;
-	int		dx;
-	int		dy;
+	double	dx;
+	double	dy;
 	t_ray	*rh;
 
 	rh = get_first_hint(angle, world, p);
@@ -74,20 +75,20 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
 	dy = world->tile;
 	while (!(wall = check_wall(world, rh->x, rh->y)))
 	{
-		rh->x += tophalf(rh->a) ? dx : -dx;
+		rh->x += righthalf(rh->a) ? dx : -dx;
 		rh->y += tophalf(rh->a) ? -dy : dy;
 	}
 	rh->y = fix_the_numbers(rh->y);
-	if (sharfy) printf("hori: %f, %f\n", rh->x, rh->y);
 	rh->s = (wall == 1) ? distance(rh, p) : INT_MAX;
+	if (sharfy) printf("hori: %f, %f, %f\n", rh->x, rh->y, rh->s);
 	return (rh);
 }
 
 t_ray		*cast_vertical(t_world *world, t_player *p, double angle)
 {
 	int		wall;
-	int		dx;
-	int		dy;
+	double	dx;
+	double	dy;
 	t_ray	*rv;
 
 	rv = get_first_vint(angle, world, p);
@@ -99,7 +100,7 @@ t_ray		*cast_vertical(t_world *world, t_player *p, double angle)
 		rv->x += righthalf(rv->a) ? dx : -dx;
 	}
 	rv->x = fix_the_numbers(rv->x);
-	if (sharfy) printf("vert: %f, %f\n", rv->x, rv->y);
 	rv->s = (wall == 1) ? distance(rv, p) : INT_MAX;
+	if (sharfy) printf("vert: %f, %f, %f\n", rv->x, rv->y, rv->s);
 	return (rv);
 }

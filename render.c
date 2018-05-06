@@ -13,7 +13,7 @@
 #include "wolf3d.h"
 
 int sharfy;
-
+int sharfy2;
 
 static double	constrain_cov(t_player *p)
 {
@@ -40,13 +40,14 @@ void			render(t_env *e)
 	angle = e->p->cov + (e->p->fov / 2);
 	while (angle > e->p->cov - (e->p->fov / 2))
 	{
-		sharfy = x == 350;
+		sharfy = x == 375;
 		rv = cast_vertical(e->world, e->p, angle);
 		rh = cast_horizontal(e->world, e->p, angle);
 		e->r = (rh->s < rv->s) ? rh : rv;
+		if (sharfy) printf("chosen distance: %f\n", e->r->s);
 		draw_wallpiece(e, e->r, x++);
 		angle -= e->p->fov / e->win->w;
 	}
-	printf("x: %f, y: %f\n", e->p->x, e->p->y);
+	printf("x: %f, y: %f\n\n", e->p->x, e->p->y);
 	print_image(e);
 }

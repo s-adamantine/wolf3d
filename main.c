@@ -17,6 +17,7 @@ int				main(int argc, char **argv)
 {
 	t_env*		e;
 
+	sharfy2 = 0;
 	e = setup_environment(argc, argv);
 	render(e);
 	mlx_loop(e->mlx);

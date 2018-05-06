@@ -38,12 +38,15 @@ static t_player		*setup_player(void)
 	t_player	*p;
 
 	p = ft_memalloc(sizeof(t_player));
-	p->x = 145.412405;
-	p->y = 60.243431;
+	// p->x = 145.412405;
+	// p->y = 60.243431;
+	p->x = 144.778960;
+	p->y = 156.426758;
 	p->h = 75;
 	p->d = 255;
 	p->fov = M_PI / 3;
-	p->cov = 190 * (M_PI / 180);
+	// p->cov = 190 * (M_PI / 180);
+	p->cov = 120 * (M_PI / 180);
 	return (p);
 }
 
