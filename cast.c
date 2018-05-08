@@ -31,8 +31,16 @@ static t_ray	*get_first_hint(double a, t_world *world, t_player *p)
 	rh = ft_memalloc(sizeof(t_ray));
 	rh->a = a;
 	rh->y = (int)(p->y / world->tile) * world->tile;
-	rh->y += tophalf(rh->a) ? - 1 : world->tile;
-	rh->x = p->x + (p->y - rh->y) / tan(rh->a);
+	if (tophalf(rh->a))
+	{
+		rh->x = p->x + (p->y - rh->y) / tan(rh->a);
+		rh->y -= 1;
+	}
+	else
+	{
+		rh->y += world->tile;
+		rh->x = p->x + (p->y - rh->y) / tan(rh->a);
+	}
 	return (rh);
 }
 
@@ -42,10 +50,18 @@ static t_ray	*get_first_vint(double a, t_world *world, t_player *p)
 
 	rv = ft_memalloc(sizeof(t_ray));
 	rv->a = a;
-	rv->x = righthalf(rv->a) ?
-		 (int)(p->x / world->tile) * world->tile + world->tile : \
-		 (int)(p->x / world->tile) * world->tile - 1;
-	rv->y = p->y + (p->x - rv->x) * tan(rv->a);
+	rv->x = (int)(p->x / world->tile) * world->tile;
+	if (righthalf(rv->a))
+	{
+		rv->x += world->tile;
+		rv->y = p->y + (p->x - rv->x) * tan(rv->a);
+	}
+	else
+	{
+		rv->y = p->y + (p->x - rv->x) * tan(rv->a);
+		rv->x -= 1;
+	}
+
 	return (rv);
 }
 
@@ -75,10 +91,11 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
 	dy = world->tile;
 	while (!(wall = check_wall(world, rh->x, rh->y)))
 	{
-		rh->x += righthalf(rh->a) ? dx : -dx;
+		rh->x += tophalf(rh->a) ? dx : -dx;
 		rh->y += tophalf(rh->a) ? -dy : dy;
 	}
 	rh->y = fix_the_numbers(rh->y);
+	rh->x = p->x + (p->y - rh->y) / tan(rh->a);
 	rh->s = (wall == 1) ? distance(rh, p) : INT_MAX;
 	if (sharfy) printf("hori: %f, %f, %f\n", rh->x, rh->y, rh->s);
 	return (rh);
@@ -100,6 +117,7 @@ t_ray		*cast_vertical(t_world *world, t_player *p, double angle)
 		rv->x += righthalf(rv->a) ? dx : -dx;
 	}
 	rv->x = fix_the_numbers(rv->x);
+	rv->y = p->y + (p->x - rv->x) * tan(rv->a);
 	rv->s = (wall == 1) ? distance(rv, p) : INT_MAX;
 	if (sharfy) printf("vert: %f, %f, %f\n", rv->x, rv->y, rv->s);
 	return (rv);
