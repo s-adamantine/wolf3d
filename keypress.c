@@ -19,6 +19,15 @@ static int		insidewall(t_world *world, double x, double y)
 	return (0);
 }
 
+static int		oob(t_world *world, double x, double y)
+{
+	if (x < 0 || y < 0)
+		return (1);
+	if (x > (world->w * world->tile) || y > (world->h * world->tile))
+		return (1);
+	return (0);
+}
+
 void			move_player(int keycode, t_env *e)
 {
 	double	dx;
@@ -28,9 +37,11 @@ void			move_player(int keycode, t_env *e)
 	dx *= (keycode == W || keycode == D) ? SPEED : -SPEED;
 	dy = (keycode == W || keycode == S) ? sin(e->p->cov) : cos(e->p->cov);
 	dy *= (keycode == W || keycode == A) ? -SPEED : SPEED;
-	if (!insidewall(e->world, e->p->x + dx, e->p->y))
+	if (!insidewall(e->world, e->p->x + dx, e->p->y) && !oob(e->world, \
+		e->p->x + dx, e->p->y))
 		e->p->x += dx;
-	if (!insidewall(e->world, e->p->x, e->p->y + dy))
+	if (!insidewall(e->world, e->p->x, e->p->y + dy) && !oob(e->world, \
+			e->p->x, e->p->y + dy))
 		e->p->y += dy;
 	render(e);
 }
