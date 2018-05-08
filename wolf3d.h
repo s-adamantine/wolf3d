@@ -28,6 +28,11 @@
 # define TILE_SIZE 64
 
 # define COLOR 0x00FFFFFF
+# define NORTH 0x00FFFFFF
+# define SOUTH 0x0000ACE6
+# define EAST 0x00CC9900
+# define WEST 0x00802B
+
 # define ESC 53
 
 # define LEFT 123
@@ -71,10 +76,11 @@ typedef struct	s_player
 
 typedef struct	s_ray
 {
-	double		x; //intersection ray
-	double		y; //and here too!
-	double		s; //distance from ray to player
-	double		a; //the angle w/r to 0
+	double		x;
+	double		y;
+	double		s;
+	double		a;
+	char		dir;
 }				t_ray;
 
 typedef struct	s_world

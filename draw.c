@@ -23,20 +23,34 @@ void			draw_midpoint(t_env *e)
 		insert_bitmap(e->img, 375, y++, 0x00FF0000);
 }
 
-void	draw_wallpiece(t_env *e, t_ray *ray, int x)
+static int		set_color(char dir)
 {
-	double	dist; //distance from person to wall
-	int		h;	  //height of the wall
-	int		y;    //window y coordinate
+	if (dir == 'N')
+		return (NORTH);
+	if (dir == 'S')
+		return (SOUTH);
+	if (dir == 'E')
+		return (EAST);
+	if (dir == 'W')
+		return (WEST);
+	return 0x00000000;
+}
+void			draw_wallpiece(t_env *e, t_ray *ray, int x)
+{
+	double	dist;
+	int		h;
+	int		y;
+	int		color;
 
 	if (ray->s == INT_MAX)
 		return ;
 	dist = ray->s * cos(ray->a - e->p->cov);
 	h = (int)((e->world->wall_h / dist) * e->p->d) + 1; //you can precompute w->wall_h / p->d bc that's always the same
-	y = (e->win->h / 2) - (h/2); //the first coordinate that you want to write in
+	color = set_color(ray->dir);
+	y = (e->win->h / 2) - (h/2);
 	while (h != 0)
 	{
-		insert_bitmap(e->img, x, y, COLOR);
+		insert_bitmap(e->img, x, y, color);
 		y++;
 		h--;
 	}

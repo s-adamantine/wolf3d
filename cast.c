@@ -35,11 +35,13 @@ static t_ray	*get_first_hint(double a, t_world *world, t_player *p)
 	{
 		rh->x = p->x + (p->y - rh->y) / tan(rh->a);
 		rh->y -= 1;
+		rh->dir = 'N';
 	}
 	else
 	{
 		rh->y += world->tile;
 		rh->x = p->x + (p->y - rh->y) / tan(rh->a);
+		rh->dir = 'S';
 	}
 	return (rh);
 }
@@ -55,13 +57,14 @@ static t_ray	*get_first_vint(double a, t_world *world, t_player *p)
 	{
 		rv->x += world->tile;
 		rv->y = p->y + (p->x - rv->x) * tan(rv->a);
+		rv->dir = 'E';
 	}
 	else
 	{
 		rv->y = p->y + (p->x - rv->x) * tan(rv->a);
 		rv->x -= 1;
+		rv->dir = 'W';
 	}
-
 	return (rv);
 }
 
