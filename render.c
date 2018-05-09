@@ -13,7 +13,6 @@
 #include "wolf3d.h"
 
 int sharfy;
-int sharfy2;
 
 static double	constrain_cov(t_player *p)
 {

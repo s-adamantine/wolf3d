@@ -39,7 +39,6 @@ void	insert_bitmap(t_image *img, int x, int y, int color)
 {
 	if (x < 0 || x >= img->w || y < 0 || y >= img->h)
 		return ;
-	// if (sharfy) printf("x, y, color: %d, %d, %x\n", x, y, color);
 	ft_memcpy(&(img->bitmap)[(x++ * img->bpp / 8) + \
 		(y * img->sline)], &color, img->bpp / 8);
 }
