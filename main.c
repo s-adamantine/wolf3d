@@ -15,14 +15,14 @@
 
 int			quit_program(t_env *e)
 {
-		mlx_destroy_window(e->mlx, e->wid);
-		exit(EXIT_SUCCESS);
-		return (0);
+	mlx_destroy_window(e->mlx, e->wid);
+	exit(EXIT_SUCCESS);
+	return (0);
 }
 
-int				main(int argc, char **argv)
+int			main(int argc, char **argv)
 {
-	t_env*		e;
+	t_env	*e;
 
 	e = setup_environment(argc, argv);
 	render(e);

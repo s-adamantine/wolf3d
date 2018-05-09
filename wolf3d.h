@@ -26,6 +26,7 @@
 
 # define WALL_H 64
 # define TILE_SIZE 64
+# define PLAYER_TO_PLANE 255
 
 # define COLOR 0x00FFFFFF
 # define NORTH 0x00FFFFFF
@@ -69,7 +70,7 @@ typedef struct	s_player
 	double		x;
 	double		y;
 	double		h;
-	double		d;
+	double		c;
 	double		fov;
 	double		cov;
 }				t_player;

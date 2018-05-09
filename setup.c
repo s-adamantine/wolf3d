@@ -41,7 +41,7 @@ static t_player		*setup_player(void)
 	p->x = 144.778960;
 	p->y = 156.426758;
 	p->h = 75;
-	p->d = 255;
+	p->c = WALL_H * PLAYER_TO_PLANE;
 	p->fov = M_PI / 3;
 	p->cov = 120 * (M_PI / 180);
 	return (p);

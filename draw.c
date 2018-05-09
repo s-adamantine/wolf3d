@@ -33,8 +33,9 @@ static int		set_color(char dir)
 		return (EAST);
 	if (dir == 'W')
 		return (WEST);
-	return 0x00000000;
+	return (0x00000000);
 }
+
 void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 {
 	double	dist;
@@ -45,9 +46,9 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	if (ray->s == INT_MAX)
 		return ;
 	dist = ray->s * cos(ray->a - e->p->cov);
-	h = (int)((e->world->wall_h / dist) * e->p->d) + 1; //you can precompute w->wall_h / p->d bc that's always the same
+	h = (int)(e->p->c / dist) + 1;
 	color = set_color(ray->dir);
-	y = (e->win->h / 2) - (h/2);
+	y = (e->win->h / 2) - (h / 2);
 	while (h)
 	{
 		insert_bitmap(e->img, x, y, color);
