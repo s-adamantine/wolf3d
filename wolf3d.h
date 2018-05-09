@@ -118,6 +118,7 @@ void			print_image(t_env *);
 
 t_env			*setup_environment(int argc, char **argv);
 void			exit_error(char *str);
+int				quit_program(t_env *e);
 void			render(t_env *e);
 void			draw_wallpiece(t_env *e, t_ray *ray, int x);
 void			draw_midpoint(t_env *e);

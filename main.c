@@ -13,6 +13,13 @@
 #include "wolf3d.h"
 #include <stdio.h>
 
+int			quit_program(t_env *e)
+{
+		mlx_destroy_window(e->mlx, e->wid);
+		exit(EXIT_SUCCESS);
+		return (0);
+}
+
 int				main(int argc, char **argv)
 {
 	t_env*		e;

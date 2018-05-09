@@ -59,10 +59,7 @@ void			move_camera(int keycode, t_env *e)
 int				handle_keypress(int keycode, t_env *e)
 {
 	if (keycode == ESC)
-	{
-		mlx_destroy_window(e->mlx, e->wid);
-		exit(EXIT_SUCCESS);
-	}
+		quit_program(e);
 	if (keycode == LEFT || keycode == RIGHT || keycode == UP || keycode == DOWN)
 		move_camera(keycode, e);
 	if (keycode == W || keycode == A || keycode == S || keycode == D)

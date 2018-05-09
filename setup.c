@@ -74,5 +74,6 @@ t_env				*setup_environment(int argc, char **argv)
 	e->p = setup_player();
 	e->r = setup_ray(e->p);
 	mlx_hook(e->wid, 2, 0, handle_keypress, e);
+	mlx_hook(e->wid, 17, 0, quit_program, e);
 	return (e);
 }
