@@ -19,19 +19,22 @@ char	**parse_file(char **argv, t_world *world)
 	char	*line;
 	char	**map;
 
-	i = 0;
+	world->h = 1;
 	fd = open(argv[1], O_RDONLY);
-	while (get_next_line(fd, &line) > 0)
-		i++;
 	if (get_next_line(fd, &line) == -1)
 		exit_error("Input file does not seem to exist.");
-	map = ft_memalloc(sizeof(char *) * (i + 1));
+	world->w = ft_strlen(ft_strcsplit(line, ' '));
+	while (get_next_line(fd, &line) > 0)
+	{
+		if ((int)ft_strlen(ft_strcsplit(line, ' ')) != world->w)
+			exit_error("Differing number of points per line in map.");
+		world->h++;
+	}
+	map = ft_memalloc(sizeof(char *) * (world->h + 1));
 	close(fd);
 	fd = open(argv[1], O_RDONLY);
 	i = 0;
 	while (get_next_line(fd, &line) > 0)
 		map[i++] = ft_strcsplit(line, ' ');
-	world->w = ft_strlen(map[0]);
-	world->h = i;
 	return (map);
 }
