@@ -12,7 +12,23 @@
 
 #include "wolf3d.h"
 
-char	**parse_file(char **argv, t_world *world)
+static int		validate_map(t_world *world, char **map)
+{
+	int	i;
+	int	j;
+
+	j = -1;
+	while (++j < world->h)
+	{
+		i = -1;
+		while (++i < world->w)
+			if (map[j][i] != '.' && map[j][i] != 'x')
+				return (0);
+	}
+	return (1);
+}
+
+char			**parse_file(char **argv, t_world *world)
 {
 	int		i;
 	int		fd;
@@ -36,5 +52,7 @@ char	**parse_file(char **argv, t_world *world)
 	i = 0;
 	while (get_next_line(fd, &line) > 0)
 		map[i++] = ft_strcsplit(line, ' ');
+	if (!validate_map(world, map))
+		exit_error("Map invalid.");
 	return (map);
 }
