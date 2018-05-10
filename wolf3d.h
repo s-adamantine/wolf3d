@@ -114,6 +114,7 @@ extern int 			sharfy;
 extern int 			sharfy2;
 
 t_image			*new_image(t_env *e, int width, int height);
+t_image			*new_xpm_image(t_env *e, char *name, int w, int h);
 void			insert_bitmap(t_image *image, int x, int y, int color);
 void			print_image(t_env *);
 

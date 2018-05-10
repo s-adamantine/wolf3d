@@ -16,7 +16,7 @@ LIBNAME2 = libmlx.a
 
 SRC = main.c image.c setup.c parse.c error.c \
 	  keypress.c cast.c draw.c render.c \
-	  math/circle.c
+	  math/circle.c xpm.c
 
 OBJ = $(SRC:.c=.o)
 
