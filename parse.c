@@ -39,19 +39,20 @@ char			**parse_file(char **argv, t_world *world)
 	fd = open(argv[1], O_RDONLY);
 	if (get_next_line(fd, &line) == -1)
 		exit_error("Input file does not seem to exist.");
-	world->w = ft_strlen(ft_strcsplit(line, ' '));
+	world->w = (int)ft_strlen(line);
 	while (get_next_line(fd, &line) > 0)
 	{
-		if ((int)ft_strlen(ft_strcsplit(line, ' ')) != world->w)
+		if ((int)ft_strlen(line) != world->w)
 			exit_error("Differing number of points per line in map.");
-		world->h++;
+		world->h += 1;
 	}
-	map = ft_memalloc(sizeof(char *) * (world->h + 1));
+	if (!(map = ft_memalloc(sizeof(char *) * (world->h + 1))))
+		exit_error("Failed to allocate memory");
 	close(fd);
 	fd = open(argv[1], O_RDONLY);
 	i = 0;
 	while (get_next_line(fd, &line) > 0)
-		map[i++] = ft_strcsplit(line, ' ');
+		map[i++] = line;
 	if (!validate_map(world, map))
 		exit_error("Map invalid.");
 	return (map);
