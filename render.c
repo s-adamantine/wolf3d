@@ -43,6 +43,8 @@ void			render(t_env *e)
 		rv = cast_vertical(e->world, e->p, angle);
 		rh = cast_horizontal(e->world, e->p, angle);
 		e->r = (rh->s < rv->s) ? rh : rv;
+		free(rh);
+		free(rv);
 		if (sharfy) printf("chosen distance: %f\n", e->r->s);
 		draw_wallpiece(e, e->r, x++);
 		angle -= e->p->fov / e->win->w;

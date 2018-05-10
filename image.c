@@ -15,6 +15,7 @@
 void	clear_image(t_image *img)
 {
 	ft_bzero(img->bitmap, img->sline * img->h);
+	// free(img->bitmap);
 }
 
 void	print_text(t_env *e)
