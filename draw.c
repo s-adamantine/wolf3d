@@ -48,6 +48,7 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	dist = ray->s * cos(ray->a - e->p->cov);
 	h = (int)(e->p->c / dist) + 1;
 	color = set_color(ray->dir);
+	h = (h > e->win->h) ? e->win->h : h;
 	y = (e->win->h / 2) - (h / 2);
 	while (h)
 	{
