@@ -6,7 +6,7 @@
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 13:49:44 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/13 16:29:47 by sadamant         ###   ########.fr       */
+/*   Updated: 2018/05/11 16:39:01 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,5 +134,7 @@ double			distance(t_ray *r, t_player *p);
 
 t_ray			*cast_horizontal(t_world *world, t_player *p, double angle);
 t_ray			*cast_vertical(t_world *world, t_player *p, double angle);
+
+void			mlx_put_text_and_value(char *str, int number, int x, int y, int color, t_env *e);
 
 #endif

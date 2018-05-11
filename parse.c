@@ -48,6 +48,7 @@ char			**parse_file(char **argv, t_world *world)
 		world->h += 1;
 		free(line);
 	}
+	free(line);
 	if (!(map = ft_memalloc(sizeof(char *) * (world->h + 1))))
 		exit_error("Failed to allocate memory");
 	close(fd);
