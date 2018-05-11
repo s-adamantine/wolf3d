@@ -47,7 +47,7 @@ void			render(t_env *e)
 		free(rv);
 		if (sharfy) printf("chosen distance: %f\n", e->r->s);
 		draw_wallpiece(e, e->r, x++);
-		angle -= e->p->fov / e->win->w;
+		angle -= e->p->fov / WINDOW_W;
 	}
 	printf("x: %f, y: %f\n\n", e->p->x, e->p->y);
 	print_image(e);

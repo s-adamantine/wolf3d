@@ -21,8 +21,8 @@
 #include "libft.h"
 #include "mlx.h"
 
-# define W_WIDTH 750
-# define W_HEIGHT 750
+# define WINDOW_W 750
+# define WINDOW_H 750
 
 # define WALL_H 64
 # define TILE_SIZE 64

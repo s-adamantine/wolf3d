@@ -23,16 +23,6 @@ static t_world		*setup_world(char **argv)
 	return (world);
 }
 
-static t_window		*new_window(void)
-{
-	t_window	*win;
-
-	win = ft_memalloc(sizeof(t_window));
-	win->w = W_WIDTH;
-	win->h = W_HEIGHT;
-	return (win);
-}
-
 static t_player		*setup_player(void)
 {
 	t_player	*p;
@@ -58,9 +48,8 @@ t_env				*setup_environment(int argc, char **argv)
 	}
 	e = ft_memalloc(sizeof(t_env));
 	e->mlx = mlx_init();
-	e->win = new_window();
-	e->wid = mlx_new_window(e->mlx, e->win->w, e->win->h, "wolf3d");
-	e->img = new_image(e, e->win->w, e->win->h);
+	e->wid = mlx_new_window(e->mlx, WINDOW_W, WINDOW_H, "wolf3d");
+	e->img = new_image(e, WINDOW_W, WINDOW_H);
 	e->world = setup_world(argv);
 	e->p = setup_player();
 	mlx_hook(e->wid, 2, 0, handle_keypress, e);
