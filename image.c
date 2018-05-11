@@ -20,12 +20,9 @@ void	clear_image(t_image *img)
 
 void	print_text(t_env *e)
 {
-	mlx_string_put(e->mlx, e->wid, 640, 20, COLOR, ft_strjoin("cov: ", \
-		ft_itoa((int)(e->p->cov * (180 / M_PI)))));
-	mlx_string_put(e->mlx, e->wid, 640, 40, COLOR, ft_strjoin("x: ", \
-		ft_itoa((int)e->p->x)));
-	mlx_string_put(e->mlx, e->wid, 640, 60, COLOR, ft_strjoin("y: ", \
-		ft_itoa((int)e->p->y)));
+	mlx_put_text_and_value("cov: ", (int) (e->p->cov * (180 / M_PI)), 640, 20, COLOR, e);
+	mlx_put_text_and_value("x: ", (int) e->p->x, 640, 40, COLOR, e);
+	mlx_put_text_and_value("y: ", (int) e->p->y, 640, 60, COLOR, e);
 }
 
 void	print_image(t_env *e)
