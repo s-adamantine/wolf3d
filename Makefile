@@ -11,44 +11,57 @@
 # **************************************************************************** #
 
 NAME = wolf3d
+LIBWOLF = libwolf.a
+
+SUBLIB1_DIR = libft
+SUBLIB2_DIR = minilibx_macos
+
+SUBLIB1 = libft/libft.a
+SUBLIB2 = minilibx_macos/libmlx.a
+SUBLIBS = $(SUBLIB1) $(SUBLIB2)
+
+LIB = -L. -lwolf -L libft/ -lft -L minilibx_macos/ -lmlx
+
 LIBNAME1 = libft.a
 LIBNAME2 = libmlx.a
 
-SRC = main.c image.c setup.c parse.c error.c \
-	  keypress.c cast.c draw.c render.c \
-	  math/circle.c xpm.c mlx_helpers.c
+SRC = main.c image.c setup.c parse.c error.c keypress.c cast.c draw.c \
+	render.c circle.c xpm.c mlx_helpers.c
 
 OBJ = $(SRC:.c=.o)
 
 CC = gcc
-FLAGS = -Wall -Wextra -Werror -framework AppKit -framework OpenGL
-
-LIB1 = -L./$(LIBDIR1) -lft
-LIB2 = -L./$(LIBDIR2) -lmlx
-LIBMATH = -lm
-LIBS = $(LIB1) $(LIB2) $(LIBMATH)
-LIBDIR1 = libft/
-LIBDIR2 = minilibx_macos/
+FLAGS = -c -Wall -Wextra -Werror
+FRAMEWORK = -framework OpenGL -framework AppKit
 
 INCLUDES = -I libft/includes -I minilibx_macos/
 
 all: $(NAME)
 
-$(NAME):
-	@$(MAKE) -C $(LIBDIR1)
-	@$(MAKE) -C $(LIBDIR2)
-	$(CC) $(FLAGS) $(SRC) $(LIBS) $(INCLUDES) -o $(NAME)
+$(OBJ): $(SRC)
+	$(CC) $(FLAGS) $(SRC) $(INCLUDES)
+
+$(NAME): $(OBJ)
+	@$(MAKE) -C $(SUBLIB1_DIR)
+	@$(MAKE) -C $(SUBLIB2_DIR)
+	@ar -rc $(LIBWOLF) $(OBJ)
+	@$(CC) $(LIB) $(FRAMEWORK) -o $(NAME)
 
 clean:
-	@$(MAKE) clean -C $(LIBDIR1)
+	@$(MAKE) clean -C $(SUBLIB1_DIR)
+	@$(MAKE) clean -C $(SUBLIB2_DIR)
 	@rm -rf $(OBJ)
 
 fclean: clean
-	@$(MAKE) clean -C $(LIBDIR2)
-	@rm -rf $(NAME) $(LIBDIR1)/$(LIBNAME1)
+	@$(MAKE) fclean -C $(SUBLIB1_DIR)
+	@$(MAKE) fclean -C $(SUBLIB2_DIR)
+	@rm -rf $(NAME)
+	@rm -rf $(LIBWOLF)
 
 re: fclean all
 
 pr:
 	@rm -rf $(NAME)
 	@$(CC) $(FLAGS) $(SRC) $(LIBS) $(INCLUDES) -o $(NAME)
+
+.PHONY: all libs clean fclean re pr
