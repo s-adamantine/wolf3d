@@ -41,9 +41,13 @@ all: $(NAME)
 $(OBJ): $(SRC)
 	$(CC) $(FLAGS) $(SRC) $(INCLUDES)
 
-$(NAME): $(OBJ)
+libft:
 	@$(MAKE) -C $(SUBLIB1_DIR)
+
+minilibx:
 	@$(MAKE) -C $(SUBLIB2_DIR)
+
+$(NAME): libft minilibx $(OBJ)
 	@ar -rc $(LIBWOLF) $(OBJ)
 	@$(CC) $(LIB) $(FRAMEWORK) -o $(NAME)
 
@@ -64,4 +68,4 @@ pr:
 	@rm -rf $(NAME)
 	@$(CC) $(FLAGS) $(SRC) $(LIBS) $(INCLUDES) -o $(NAME)
 
-.PHONY: all libs clean fclean re pr
+.PHONY: all libs clean fclean re pr libft minilibx
