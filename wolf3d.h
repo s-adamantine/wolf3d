@@ -59,12 +59,6 @@ typedef struct	s_image
 	int			h;
 }				t_image;
 
-typedef struct	s_plane
-{
-	double		cx;
-	double		cy;
-}				t_plane;
-
 typedef struct	s_player
 {
 	double		x;
@@ -132,6 +126,6 @@ double			distance(t_ray *r, t_player *p);
 t_ray			*cast_horizontal(t_world *world, t_player *p, double angle);
 t_ray			*cast_vertical(t_world *world, t_player *p, double angle);
 
-void			mlx_put_text_and_value(char *str, int number, int x, int y, int color, t_env *e);
+void			mlx_put_text_and_value(char *str, int number, int x, int y, t_env *e);
 
 #endif

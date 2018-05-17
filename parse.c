@@ -28,16 +28,20 @@ static int		valid_map_characters(t_world *world, char **map)
 	return (1);
 }
 
-static char		**fill_map(t_world *world)
+static char		**fill_map(char **argv, t_world *world)
 {
+	int		i;
 	int		fd;
+	char	*line;
 	char	**map;
 
+	if (!(map = ft_memalloc(sizeof(char *) * (world->h + 1))))
+		exit_error("Failed to allocate memory");
 	fd = open(argv[1], O_RDONLY);
 	i = 0;
 	while (get_next_line(fd, &line) > 0)
 		map[i++] = line;
-	if (!validate_map(world, map))
+	if (!valid_map_characters(world, map))
 		exit_error("Invalid characters found in map.");
 	free(line);
 	return (map);
@@ -45,7 +49,6 @@ static char		**fill_map(t_world *world)
 
 char			**parse_file(char **argv, t_world *world)
 {
-	int		i;
 	int		fd;
 	char	*line;
 
@@ -63,8 +66,6 @@ char			**parse_file(char **argv, t_world *world)
 		free(line);
 	}
 	free(line);
-	if (!(map = ft_memalloc(sizeof(char *) * (world->h + 1))))
-		exit_error("Failed to allocate memory");
 	close(fd);
-	return (fill_map(world));
+	return (fill_map(argv, world));
 }
