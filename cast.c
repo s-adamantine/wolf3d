@@ -14,7 +14,6 @@
 
 static int	check_wall(t_world *world, double x, double y)
 {
-	if (sharfy) printf("check_wall x, y: %f, %f\n", x, y);
 	if (x < 0 || y < 0)
 		return (-1);
 	if (x >= (world->w * world->tile) || y >= (world->h * world->tile))
@@ -91,7 +90,6 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
 	rh->y = ((int)rh->y % world->tile == 0) ? rh->y : rh->y + 1;
 	rh->x = p->x + (p->y - rh->y) / tan(rh->a);
 	rh->s = (wall == 1) ? distance(rh, p) : INT_MAX;
-	if (sharfy) printf("hori: %f, %f, %f\n", rh->x, rh->y, rh->s);
 	return (rh);
 }
 
@@ -113,6 +111,5 @@ t_ray		*cast_vertical(t_world *world, t_player *p, double angle)
 	rv->x = ((int)rv->x % world->tile == 0) ? rv->x : rv->x + 1;
 	rv->y = p->y + (p->x - rv->x) * tan(rv->a);
 	rv->s = (wall == 1) ? distance(rv, p) : INT_MAX;
-	if (sharfy) printf("vert: %f, %f, %f\n", rv->x, rv->y, rv->s);
 	return (rv);
 }
