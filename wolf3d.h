@@ -13,13 +13,13 @@
 #ifndef WOLF3D_H
 # define WOLF3D_H
 
-#include <fcntl.h>
-#include <math.h>
-#include <stdio.h>
-#include <limits.h>
+# include <fcntl.h>
+# include <math.h>
+# include <stdio.h>
+# include <limits.h>
 
-#include "libft.h"
-#include "mlx.h"
+# include "libft.h"
+# include "mlx.h"
 
 # define WINDOW_W 750
 # define WINDOW_H 750
@@ -87,17 +87,10 @@ typedef struct	s_world
 	int			h;
 }				t_world;
 
-typedef struct	s_window
-{
-	double		h;
-	double		w;
-}				t_window;
-
 typedef struct	s_env
 {
 	void		*mlx;
 	void		*wid;
-	t_window	*win;
 	t_image		*img;
 	t_world		*world;
 	t_player	*p;
@@ -107,7 +100,7 @@ typedef struct	s_env
 t_image			*new_image(t_env *e, int width, int height);
 t_image			*new_xpm_image(t_env *e, char *name, int w, int h);
 void			insert_bitmap(t_image *image, int x, int y, int color);
-void			print_image(t_env *);
+void			print_image(t_env *e);
 
 t_env			*setup_environment(int argc, char **argv);
 void			exit_error(char *str);
@@ -126,6 +119,7 @@ double			distance(t_ray *r, t_player *p);
 t_ray			*cast_horizontal(t_world *world, t_player *p, double angle);
 t_ray			*cast_vertical(t_world *world, t_player *p, double angle);
 
-void			mlx_put_text_and_value(char *str, int number, int x, int y, t_env *e);
+void			mlx_put_text_and_value(char *str, int number, int x, int y, \
+					t_env *e);
 
 #endif
