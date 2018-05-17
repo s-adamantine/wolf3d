@@ -17,17 +17,9 @@ void	clear_image(t_image *img)
 	ft_bzero(img->bitmap, img->sline * img->h);
 }
 
-void	print_text(t_env *e)
-{
-	mlx_put_text_and_value("cov: ", (int) (e->p->cov * (180 / M_PI)), 640, 20, COLOR, e);
-	mlx_put_text_and_value("x: ", (int) e->p->x, 640, 40, COLOR, e);
-	mlx_put_text_and_value("y: ", (int) e->p->y, 640, 60, COLOR, e);
-}
-
 void	print_image(t_env *e)
 {
 	mlx_put_image_to_window(e->mlx, e->wid, e->img->id, 0, 0);
-	print_text(e);
 	clear_image(e->img);
 }
 

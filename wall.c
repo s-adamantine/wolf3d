@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_helpers.c                                      :+:      :+:    :+:   */
+/*   wall.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/11 16:39:22 by sadamant          #+#    #+#             */
-/*   Updated: 2018/05/11 16:39:24 by sadamant         ###   ########.fr       */
+/*   Created: 2018/05/17 14:17:42 by sadamant          #+#    #+#             */
+/*   Updated: 2018/05/17 14:17:50 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void	mlx_put_text_and_value(char *str, int number, int x, int y, t_env *e)
+double		distance(t_ray *r, t_player *p)
 {
-	char	*num;
-	char	*joined;
-
-	num = ft_itoa(number);
-	joined = ft_strjoin(str, num);
-	mlx_string_put(e->mlx, e->wid, x, y, COLOR, joined);
-	free(num);
-	free(joined);
+	return (sqrt(pow((p->x - r->x), 2) + pow((p->y - r->y), 2)));
 }

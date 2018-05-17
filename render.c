@@ -22,9 +22,10 @@ static double	constrain_cov(t_player *p)
 }
 
 /*
-** goes through the entire window and if there's a wall intersection, finds the distance of
-** wall to player, and draws the wall.
+** goes through the entire window and if there's a wall intersection,
+** finds the distance of wall to player, and draws the wall.
 */
+
 void			render(t_env *e)
 {
 	t_ray	*rh;

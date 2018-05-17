@@ -12,7 +12,7 @@
 
 #include "wolf3d.h"
 
-static int	check_wall(t_world *world, double x, double y)
+static int		check_wall(t_world *world, double x, double y)
 {
 	if (x < 0 || y < 0)
 		return (-1);
@@ -67,12 +67,7 @@ static t_ray	*get_first_vint(double a, t_world *world, t_player *p)
 	return (rv);
 }
 
-double		distance(t_ray *r, t_player *p)
-{
-	return (sqrt(pow((p->x - r->x), 2) + pow((p->y - r->y), 2)));
-}
-
-t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
+t_ray			*cast_horizontal(t_world *world, t_player *p, double angle)
 {
 	int		wall;
 	double	dx;
@@ -80,7 +75,7 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
 	t_ray	*rh;
 
 	rh = get_first_hint(angle, world, p);
-	dx = world->tile/tan(rh->a);
+	dx = world->tile / tan(rh->a);
 	dy = world->tile;
 	while (!(wall = check_wall(world, rh->x, rh->y)))
 	{
@@ -93,7 +88,7 @@ t_ray		*cast_horizontal(t_world *world, t_player *p, double angle)
 	return (rh);
 }
 
-t_ray		*cast_vertical(t_world *world, t_player *p, double angle)
+t_ray			*cast_vertical(t_world *world, t_player *p, double angle)
 {
 	int		wall;
 	double	dx;

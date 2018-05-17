@@ -12,7 +12,7 @@
 
 #include "wolf3d.h"
 
-static int		validate_map(t_world *world, char **map)
+static int		valid_map_characters(t_world *world, char **map)
 {
 	int	i;
 	int	j;
@@ -28,12 +28,26 @@ static int		validate_map(t_world *world, char **map)
 	return (1);
 }
 
+static char		**fill_map(t_world *world)
+{
+	int		fd;
+	char	**map;
+
+	fd = open(argv[1], O_RDONLY);
+	i = 0;
+	while (get_next_line(fd, &line) > 0)
+		map[i++] = line;
+	if (!validate_map(world, map))
+		exit_error("Invalid characters found in map.");
+	free(line);
+	return (map);
+}
+
 char			**parse_file(char **argv, t_world *world)
 {
 	int		i;
 	int		fd;
 	char	*line;
-	char	**map;
 
 	world->h = 1;
 	fd = open(argv[1], O_RDONLY);
@@ -52,12 +66,5 @@ char			**parse_file(char **argv, t_world *world)
 	if (!(map = ft_memalloc(sizeof(char *) * (world->h + 1))))
 		exit_error("Failed to allocate memory");
 	close(fd);
-	fd = open(argv[1], O_RDONLY);
-	i = 0;
-	while (get_next_line(fd, &line) > 0)
-		map[i++] = line;
-	if (!validate_map(world, map))
-		exit_error("Map invalid.");
-	free(line);
-	return (map);
+	return (fill_map(world));
 }
