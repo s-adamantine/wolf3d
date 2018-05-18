@@ -26,7 +26,7 @@ LIBNAME1 = libft.a
 LIBNAME2 = libmlx.a
 
 SRC = main.c image.c setup.c parse.c error.c keypress.c cast.c draw.c \
-	render.c circle.c xpm.c mlx_helpers.c wall.c
+	render.c circle.c xpm.c wall.c
 
 OBJ = $(SRC:.c=.o)
 
