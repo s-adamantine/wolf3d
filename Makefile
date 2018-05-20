@@ -64,8 +64,4 @@ fclean: clean
 
 re: fclean all
 
-pr:
-	@rm -rf $(NAME)
-	@$(CC) $(FLAGS) $(SRC) $(LIBS) $(INCLUDES) -o $(NAME)
-
 .PHONY: all libs clean fclean re pr libft minilibx
