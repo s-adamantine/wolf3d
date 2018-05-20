@@ -20,7 +20,7 @@ t_image		*new_xpm_image(t_env *e, char *name, int w, int h)
 	xpm->w = w;
 	xpm->h = h;
 	xpm->id = mlx_xpm_file_to_image(e->mlx, name, &w, &h);
-	xpm->bitmap = mlx_get_data_addr(xpm->id, &(xpm->bpp), &(xpm->sline), \
+	xpm->bitmap = (int *)mlx_get_data_addr(xpm->id, &(xpm->bpp), &(xpm->sline), \
 		&(xpm->endian));
 	return (xpm);
 }

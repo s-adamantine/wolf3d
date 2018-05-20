@@ -53,6 +53,7 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	while (h)
 	{
 		insert_bitmap(e->img, x, y, color);
+		printf("color :%d, and grabbed: %d\n", color, get_color(e->img, x, y));
 		y++;
 		h--;
 	}

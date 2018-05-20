@@ -54,7 +54,7 @@ typedef struct	s_image
 	int			sline;
 	int			endian;
 	void		*id;
-	char		*bitmap;
+	int			*bitmap;
 	int			w;
 	int			h;
 }				t_image;
@@ -106,7 +106,7 @@ typedef struct	s_env
 
 t_image			*new_image(t_env *e, int width, int height);
 t_image			*new_xpm_image(t_env *e, char *name, int w, int h);
-void			insert_bitmap(t_image *image, int x, int y, int color);
+void			insert_bitmap(t_image *img, int x, int y, unsigned int color);
 void			print_image(t_env *e);
 
 t_env			*setup_environment(int argc, char **argv);
@@ -120,6 +120,8 @@ char			**parse_file(char **argv, t_world *world);
 
 int				tophalf(double value);
 int				righthalf(double value);
+
+int				get_color(t_image *img, int x, int y);
 
 double			distance(t_ray *r, t_player *p);
 

@@ -23,12 +23,16 @@ void	print_image(t_env *e)
 	clear_image(e->img);
 }
 
-void	insert_bitmap(t_image *img, int x, int y, int color)
+void	insert_bitmap(t_image *img, int x, int y, unsigned int color)
 {
 	if (x < 0 || x >= img->w || y < 0 || y >= img->h)
 		return ;
-	ft_memcpy(&(img->bitmap)[(x++ * img->bpp / 8) + \
-		(y * img->sline)], &color, img->bpp / 8);
+	img->bitmap[(y * img->w + x)] = color;
+}
+
+int		get_color(t_image *img, int x, int y)
+{
+	return (img->bitmap[(y * img->w + x)]);
 }
 
 t_image	*new_image(t_env *e, int width, int height)
@@ -39,7 +43,7 @@ t_image	*new_image(t_env *e, int width, int height)
 	img->w = width;
 	img->h = height;
 	img->id = mlx_new_image(e->mlx, width, height);
-	img->bitmap = mlx_get_data_addr(img->id, &(img->bpp), &(img->sline), \
+	img->bitmap = (int *)mlx_get_data_addr(img->id, &(img->bpp), &(img->sline), \
 			&(img->endian));
 	return (img);
 }
