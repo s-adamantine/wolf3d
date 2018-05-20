@@ -47,11 +47,11 @@ t_env				*setup_environment(int argc, char **argv)
 		exit_error("usage: ./maps/mapfile");
 	}
 	e = ft_memalloc(sizeof(t_env));
+	e->world = setup_world(argv);
+	e->p = setup_player();
 	e->mlx = mlx_init();
 	e->wid = mlx_new_window(e->mlx, WINDOW_W, WINDOW_H, "wolf3d");
 	e->img = new_image(e, WINDOW_W, WINDOW_H);
-	e->world = setup_world(argv);
-	e->p = setup_player();
 	mlx_hook(e->wid, 2, 0, handle_keypress, e);
 	mlx_hook(e->wid, 17, 0, quit_program, e);
 	return (e);
