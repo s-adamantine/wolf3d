@@ -23,7 +23,6 @@ static t_world		*setup_world(char **argv)
 	return (world);
 }
 
-// need to error check for more than one P position
 static void		position_player(t_player *p, char **map)
 {
 	int	i;

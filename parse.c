@@ -32,15 +32,22 @@ static char		**fill_map(char **argv, t_world *world)
 {
 	int		i;
 	int		fd;
+	int		playercount;
 	char	*line;
 	char	**map;
 
+	playercount = 0;
 	if (!(map = ft_memalloc(sizeof(char *) * (world->h + 1))))
 		exit_error("Failed to allocate memory.");
 	fd = open(argv[1], O_RDONLY);
 	i = 0;
 	while (get_next_line(fd, &line) > 0)
+	{
 		map[i++] = line;
+		if (ft_strchr(line, 'P'))
+			playercount += 1;
+		(playercount > 1) ? exit_error("Sorry, single player only.") : 0;
+	}
 	if (!valid_map_characters(world, map))
 		exit_error("Invalid characters found in map.");
 	free(line);
