@@ -52,7 +52,10 @@ t_env				*setup_environment(int argc, char **argv)
 	e->mlx = mlx_init();
 	e->wid = mlx_new_window(e->mlx, WINDOW_W, WINDOW_H, "wolf3d");
 	e->img = new_image(e, WINDOW_W, WINDOW_H);
-	mlx_hook(e->wid, 2, 0, handle_keypress, e);
-	mlx_hook(e->wid, 17, 0, quit_program, e);
+	e->key = ft_memalloc(sizeof(t_key));
+	mlx_hook(e->wid, KEYPRESS_EVENT, 0, handle_keypress, e);
+	mlx_hook(e->wid, KEYRELEASE_EVENT, 0, handle_keyrelease, e);
+	mlx_hook(e->wid, REDX_EVENT, 0, quit_program, e);
+	mlx_loop_hook(e->mlx, refresh_screen, e);
 	return (e);
 }

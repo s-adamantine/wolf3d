@@ -46,7 +46,21 @@
 # define S 1
 # define D 2
 
-# define SPEED 5
+# define SPEED 2
+
+# define KEYPRESS_EVENT 2
+# define KEYRELEASE_EVENT 3
+# define REDX_EVENT 17
+
+typedef struct	s_key
+{
+	int			left;
+	int			right;
+	int			w;
+	int			a;
+	int			s;
+	int			d;
+}				t_key;
 
 typedef struct	s_image
 {
@@ -102,6 +116,7 @@ typedef struct	s_env
 	t_world		*world;
 	t_player	*p;
 	t_ray		*r;
+	t_key		*key;
 }				t_env;
 
 t_image			*new_image(t_env *e, int width, int height);
@@ -116,6 +131,8 @@ void			render(t_env *e);
 void			draw_wallpiece(t_env *e, t_ray *ray, int x);
 void			draw_midpoint(t_env *e);
 int				handle_keypress(int keycode, t_env *e);
+int				handle_keyrelease(int keycode, t_env *e);
+int				refresh_screen(t_env *e);
 char			**parse_file(char **argv, t_world *world);
 
 int				tophalf(double value);
