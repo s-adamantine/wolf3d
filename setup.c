@@ -28,8 +28,9 @@ static t_player		*setup_player(void)
 	t_player	*p;
 
 	p = ft_memalloc(sizeof(t_player));
-	p->x = 150;
-	p->y = 150;
+	p->v = WALK_SPEED;
+	p->x = 300;
+	p->y = 200;
 	p->h = 75;
 	p->c = WALL_H * PLAYER_TO_PLANE;
 	p->fov = M_PI / 3;

@@ -45,8 +45,10 @@
 # define A 0
 # define S 1
 # define D 2
+# define LSHIFT 257
 
-# define SPEED 2
+# define WALK_SPEED 2
+# define RUN_SPEED 6
 
 # define KEYPRESS_EVENT 2
 # define KEYRELEASE_EVENT 3
@@ -56,6 +58,7 @@ typedef struct	s_key
 {
 	int			left;
 	int			right;
+	int			lshift;
 	int			w;
 	int			a;
 	int			s;
@@ -81,6 +84,7 @@ typedef struct	s_player
 	double		c;
 	double		fov;
 	double		cov;
+	int			v;
 }				t_player;
 
 typedef struct	s_ray

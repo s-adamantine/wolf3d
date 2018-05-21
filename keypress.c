@@ -35,12 +35,13 @@ int				refresh_screen(t_env *e)
 
 	dx = 0;
 	dy = 0;
+	e->p->v = (e->key->lshift == 1) ? RUN_SPEED : WALK_SPEED; 
 	(e->key->w == 1 || e->key->s == 1) ? dx = cos(e->p->cov) : 0;
 	(e->key->a == 1 || e->key->d == 1) ? dx = sin(e->p->cov) : 0;
-	dx *= (e->key->w == 1 || e->key->d == 1) ? SPEED : -SPEED;
+	dx *= (e->key->w == 1 || e->key->d == 1) ? e->p->v : -e->p->v;
 	(e->key->w == 1 || e->key->s == 1) ? dy = sin(e->p->cov) : 0;
 	(e->key->a == 1 || e->key->d == 1) ? dy = cos(e->p->cov) : 0;
-	dy *= (e->key->w == 1 || e->key->a == 1) ? -SPEED : SPEED;
+	dy *= (e->key->w == 1 || e->key->a == 1) ? -e->p->v : e->p->v;
 	(e->key->left == 1) ? e->p->cov += 1 * (M_PI / 180) : 0;
 	(e->key->right == 1) ? e->p->cov -= 1 * (M_PI / 180) : 0;
 	if (!out_of_bounds(e->world, e->p->x + dx, e->p->y))
@@ -59,6 +60,7 @@ int				handle_keyrelease(int keycode, t_env *e)
 	(keycode == D) ? e->key->d = 0 : 0;
 	(keycode == LEFT) ? e->key->left = 0 : 0;
 	(keycode == RIGHT) ? e->key->right = 0 : 0;
+	(keycode == LSHIFT) ? e->key->lshift = 0 : 0;
 	return (0);
 }
 
@@ -72,5 +74,6 @@ int				handle_keypress(int keycode, t_env *e)
 	(keycode == D) ? e->key->d = 1 : 0;
 	(keycode == LEFT) ? e->key->left = 1 : 0;
 	(keycode == RIGHT) ? e->key->right = 1 : 0;
+	(keycode == LSHIFT) ? e->key->lshift = 1 : 0;
 	return (0);
 }
