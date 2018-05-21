@@ -22,7 +22,7 @@ static int		valid_map_characters(t_world *world, char **map)
 	{
 		i = -1;
 		while (++i < world->w)
-			if (map[j][i] != '.' && map[j][i] != 'x')
+			if (map[j][i] != '.' && map[j][i] != 'x' && map[j][i] != 'P')
 				return (0);
 	}
 	return (1);
@@ -36,7 +36,7 @@ static char		**fill_map(char **argv, t_world *world)
 	char	**map;
 
 	if (!(map = ft_memalloc(sizeof(char *) * (world->h + 1))))
-		exit_error("Failed to allocate memory");
+		exit_error("Failed to allocate memory.");
 	fd = open(argv[1], O_RDONLY);
 	i = 0;
 	while (get_next_line(fd, &line) > 0)

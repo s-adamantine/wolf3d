@@ -23,14 +23,38 @@ static t_world		*setup_world(char **argv)
 	return (world);
 }
 
-static t_player		*setup_player(void)
+// need to error check for more than one P position
+static void		position_player(t_player *p, char **map)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (map[j])
+	{
+		i = 0;
+		while (map[j][i])
+		{
+			if (map[j][i] == 'P')
+			{
+				p->x = (i + 1) * TILE_SIZE - TILE_SIZE / 2;
+				p->y = (j + 1) * TILE_SIZE - TILE_SIZE / 2;
+				return ;
+			}
+			i++;
+		}
+		j++;
+	}
+	exit_error("Can't find player position. :(");
+}
+
+static t_player		*setup_player(t_env *e)
 {
 	t_player	*p;
 
 	p = ft_memalloc(sizeof(t_player));
+	position_player(p, e->world->map);
 	p->v = WALK_SPEED;
-	p->x = 300;
-	p->y = 200;
 	p->h = 75;
 	p->c = WALL_H * PLAYER_TO_PLANE;
 	p->fov = M_PI / 3;
@@ -49,7 +73,7 @@ t_env				*setup_environment(int argc, char **argv)
 	}
 	e = ft_memalloc(sizeof(t_env));
 	e->world = setup_world(argv);
-	e->p = setup_player();
+	e->p = setup_player(e);
 	e->mlx = mlx_init();
 	e->wid = mlx_new_window(e->mlx, WINDOW_W, WINDOW_H, "wolf3d");
 	e->img = new_image(e, WINDOW_W, WINDOW_H);

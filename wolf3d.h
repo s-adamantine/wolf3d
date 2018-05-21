@@ -149,4 +149,6 @@ double			distance(t_ray *r, t_player *p);
 t_ray			*cast_horizontal(t_world *world, t_player *p, double angle);
 t_ray			*cast_vertical(t_world *world, t_player *p, double angle);
 
+void			position_player(t_player *p, char **map);
+
 #endif
