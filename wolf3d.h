@@ -97,12 +97,15 @@ typedef struct	s_env
 {
 	void		*mlx;
 	void		*wid;
+	t_image		*xpm;
 	t_window	*win;
 	t_image		*img;
 	t_world		*world;
 	t_player	*p;
 	t_ray		*r;
 }				t_env;
+
+extern int		sharfy;
 
 t_image			*new_image(t_env *e, int width, int height);
 t_image			*new_xpm_image(t_env *e, char *name, int w, int h);

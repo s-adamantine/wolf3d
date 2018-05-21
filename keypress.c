@@ -55,6 +55,7 @@ void			move_camera(int keycode, t_env *e)
 
 int				handle_keypress(int keycode, t_env *e)
 {
+	printf("keycode: %d\n", keycode);
 	if (keycode == ESC)
 		quit_program(e);
 	if (keycode == LEFT || keycode == RIGHT || keycode == UP || keycode == DOWN)
