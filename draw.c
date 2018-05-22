@@ -42,6 +42,7 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	int		h;
 	int		y;
 	int		i;
+	int		x_texture;
 	int		color;
 	int		offset;
 
@@ -57,10 +58,15 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 		(int)ray->x % TILE_SIZE;
 	if (sharfy)
 		printf("cov: %f, ray->x: %f, %d\n", e->p->cov * (180 / M_PI), ray->x, offset);
+	x_texture = ((double) offset / TILE_SIZE) * e->xpm->w;
+	if (sharfy)
+		printf("(double)(offset / TILE_SIZE): %f\n", (double)offset / TILE_SIZE);
+	if (sharfy)
+		printf("offset: %d, x_texture: %d\n", offset, x_texture);
 	while (h)
 	{
 		if (e->r->dir == 'N')
-			color = e->xpm->bitmap[i * e->xpm->w + offset];
+			color = e->xpm->bitmap[i * e->xpm->w + x_texture];
 		insert_bitmap(e->img, x, y, color);
 		// printf("color :%d, and grabbed: %d\n", color, get_color(e->img, x, y));
 		i++;
