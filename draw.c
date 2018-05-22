@@ -43,8 +43,9 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	int		y;
 	int		i;
 	int		x_texture;
+	int		y_texture;
 	int		color;
-	int		offset;
+	int		x_offset;
 
 	i = 0;
 	if (ray->s == INT_MAX)
@@ -54,17 +55,22 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	color = set_color(ray->dir);
 	h = (h > WINDOW_W) ? WINDOW_W : h;
 	y = (WINDOW_W / 2) - (h / 2);
-	offset = (e->r->dir == 'E' || e->r->dir == 'W') ?(int)ray->y % TILE_SIZE : \
+	x_offset = (e->r->dir == 'E' || e->r->dir == 'W') ?(int)ray->y % TILE_SIZE : \
 		(int)ray->x % TILE_SIZE;
 	if (sharfy)
-		printf("cov: %f, ray->x: %f, %d\n", e->p->cov * (180 / M_PI), ray->x, offset);
-	x_texture = ((double) offset / TILE_SIZE) * e->xpm->w;
+		printf("cov: %f, ray->x: %f, %d\n", e->p->cov * (180 / M_PI), ray->x, \
+		 	x_offset);
+	x_texture = ((double) x_offset / TILE_SIZE) * e->xpm->w;
 	if (sharfy)
-		printf("(double)(offset / TILE_SIZE): %f\n", (double)offset / TILE_SIZE);
+		printf("(double)(offset / TILE_SIZE): %f\n", (double)x_offset / TILE_SIZE);
 	if (sharfy)
-		printf("offset: %d, x_texture: %d\n", offset, x_texture);
+		printf("offset: %d, x_texture: %d\n", x_offset, x_texture);
+	if (sharfy)
+		printf("y_texture: ");
 	while (h)
 	{
+		y_texture = ((double) y / WALL_H ) * e->xpm->h;
+		printf("%d ", y_texture);
 		if (e->r->dir == 'N')
 			color = e->xpm->bitmap[i * e->xpm->w + x_texture];
 		insert_bitmap(e->img, x, y, color);
@@ -73,4 +79,6 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 		y++;
 		h--;
 	}
+	if (sharfy)
+		printf("\n");
 }

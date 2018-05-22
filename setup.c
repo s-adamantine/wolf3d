@@ -52,7 +52,7 @@ t_env				*setup_environment(int argc, char **argv)
 	e->mlx = mlx_init();
 	e->wid = mlx_new_window(e->mlx, WINDOW_W, WINDOW_H, "wolf3d");
 	e->img = new_image(e, WINDOW_W, WINDOW_H);
-	e->xpm = new_xpm_image(e, "textures/brickwall.xpm", 1128, 1128);
+	e->xpm = new_xpm_image(e, "textures/brickwall.xpm", 564, 564);
 	mlx_hook(e->wid, 2, 0, handle_keypress, e);
 	mlx_hook(e->wid, 17, 0, quit_program, e);
 	return (e);
