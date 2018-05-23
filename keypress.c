@@ -32,10 +32,8 @@ int				refresh_screen(t_env *e)
 {
 	double	dx_f;
 	double	dx_s;
-	double	dx;
 	double	dy_f;
 	double	dy_s;
-	double	dy;
 
 	dx_f = 0;
 	dx_s = 0;
@@ -52,12 +50,10 @@ int				refresh_screen(t_env *e)
 	dy_s *= (e->key->a) ? -e->p->v : e->p->v;
 	(e->key->left) ? e->p->cov += 1 * (M_PI / 180) : 0;
 	(e->key->right) ? e->p->cov -= 1 * (M_PI / 180) : 0;
-	dx = dx_f + dx_s;
-	dy = dy_f + dy_s;
-	if (!out_of_bounds(e->world, e->p->x + dx, e->p->y))
-		e->p->x += dx;
-	if (!out_of_bounds(e->world, e->p->x, e->p->y + dy))
-		e->p->y += dy;
+	if (!out_of_bounds(e->world, e->p->x + dx_f + dx_s, e->p->y))
+		e->p->x += (dx_f + dx_s);
+	if (!out_of_bounds(e->world, e->p->x, e->p->y + dy_f + dy_s))
+		e->p->y += (dy_f + dy_s);
 	render(e);
 	return (0);
 }
