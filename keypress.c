@@ -35,15 +35,15 @@ int				refresh_screen(t_env *e)
 
 	dx = 0;
 	dy = 0;
-	e->p->v = (e->key->lshift == 1) ? RUN_SPEED : WALK_SPEED; 
-	(e->key->w == 1 || e->key->s == 1) ? dx = cos(e->p->cov) : 0;
-	(e->key->a == 1 || e->key->d == 1) ? dx = sin(e->p->cov) : 0;
+	e->p->v = (e->key->lshift == 1) ? RUN_SPEED : WALK_SPEED;
+	(e->key->w || e->key->s) ? dx = cos(e->p->cov) : 0;
+	(e->key->a || e->key->d) ? dx = sin(e->p->cov) : 0;
 	dx *= (e->key->w == 1 || e->key->d == 1) ? e->p->v : -e->p->v;
-	(e->key->w == 1 || e->key->s == 1) ? dy = sin(e->p->cov) : 0;
-	(e->key->a == 1 || e->key->d == 1) ? dy = cos(e->p->cov) : 0;
-	dy *= (e->key->w == 1 || e->key->a == 1) ? -e->p->v : e->p->v;
-	(e->key->left == 1) ? e->p->cov += 1 * (M_PI / 180) : 0;
-	(e->key->right == 1) ? e->p->cov -= 1 * (M_PI / 180) : 0;
+	(e->key->w || e->key->s) ? dy = sin(e->p->cov) : 0;
+	(e->key->a || e->key->d) ? dy = cos(e->p->cov) : 0;
+	dy *= (e->key->w || e->key->a) ? -e->p->v : e->p->v;
+	(e->key->left) ? e->p->cov += 1 * (M_PI / 180) : 0;
+	(e->key->right) ? e->p->cov -= 1 * (M_PI / 180) : 0;
 	if (!out_of_bounds(e->world, e->p->x + dx, e->p->y))
 		e->p->x += dx;
 	if (!out_of_bounds(e->world, e->p->x, e->p->y + dy))
