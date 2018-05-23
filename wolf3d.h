@@ -117,6 +117,7 @@ typedef struct	s_env
 	void		*wid;
 	t_window	*win;
 	t_image		*img;
+	t_image		*texture;
 	t_world		*world;
 	t_player	*p;
 	t_ray		*r;

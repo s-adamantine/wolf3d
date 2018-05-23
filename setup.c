@@ -77,6 +77,7 @@ t_env				*setup_environment(int argc, char **argv)
 	e->wid = mlx_new_window(e->mlx, WINDOW_W, WINDOW_H, "wolf3d");
 	e->img = new_image(e, WINDOW_W, WINDOW_H);
 	e->key = ft_memalloc(sizeof(t_key));
+	e->texture = new_xpm_image(e, "textures/brickwall.xpm", 564, 564);
 	mlx_hook(e->wid, KEYPRESS_EVENT, 0, handle_keypress, e);
 	mlx_hook(e->wid, KEYRELEASE_EVENT, 0, handle_keyrelease, e);
 	mlx_hook(e->wid, REDX_EVENT, 0, quit_program, e);
