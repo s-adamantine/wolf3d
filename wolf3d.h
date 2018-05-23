@@ -111,6 +111,11 @@ typedef struct	s_window
 	double		w;
 }				t_window;
 
+typedef struct	s_textures
+{
+
+}				t_textures;
+
 typedef struct	s_env
 {
 	void		*mlx;

@@ -12,7 +12,15 @@
 
 #include "wolf3d.h"
 
+/*
+** finds the distance and then applies a fisheye correction
+*/
+
 double		distance(t_ray *r, t_player *p)
 {
-	return (sqrt(pow((p->x - r->x), 2) + pow((p->y - r->y), 2)));
+	double	dist;
+
+	dist = sqrt(pow((p->x - r->x), 2) + pow((p->y - r->y), 2));
+	dist *= cos(r->a - p->cov);
+	return (dist);
 }

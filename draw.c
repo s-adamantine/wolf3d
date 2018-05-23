@@ -23,10 +23,10 @@ void			draw_midpoint(t_env *e)
 		insert_bitmap(e->img, 375, y++, 0x00FF0000);
 }
 
-static int		set_color(char dir)
+static int		grab_color(char dir, t_image *texture, int x_texture, int y_texture)
 {
 	if (dir == 'N')
-		return (NORTH);
+		return (texture->bitmap[y_texture * texture->w + x_texture]);
 	if (dir == 'S')
 		return (SOUTH);
 	if (dir == 'E')
@@ -38,40 +38,27 @@ static int		set_color(char dir)
 
 void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 {
-	double	dist;
-	int		h;
-	int		wall_height;
-	int		y;
+	int		wall_h;
+	int		topmost_pixel;
 	int		i;
-	int		j;
 	int		x_texture;
 	int		y_texture;
-	int		color;
 	double	x_offset;
 
 	i = 0;
-	j = 0;
 	if (ray->s == INT_MAX)
 		return ;
-	dist = ray->s * cos(ray->a - e->p->cov);
-	h = (int)(e->p->c / dist) + 1;
-	color = set_color(ray->dir);
-	h = (h > WINDOW_W) ? WINDOW_W : h;
-	y = (WINDOW_W / 2) - (h / 2);
-	x_offset = (e->r->dir == 'E' || e->r->dir == 'W') ? \
+	wall_h = (int)(e->p->c / ray->s) + 1;
+	wall_h = (wall_h > WINDOW_W) ? WINDOW_W : wall_h;
+	topmost_pixel = (WINDOW_W / 2) - (wall_h / 2);
+	x_offset = (ray->dir == 'E' || ray->dir == 'W') ? \
 		ray->y - (((int)ray->y / TILE_SIZE) * TILE_SIZE) : \
 		ray->x - (((int)ray->x / TILE_SIZE) * TILE_SIZE);
 	x_texture = ((double) x_offset / TILE_SIZE) * e->texture->w;
-	wall_height = h;
-	while (h)
+	while (i <= wall_h)
 	{
-		y_texture = ((double) j / wall_height ) * e->texture->h;
-		j++;
-		if (e->r->dir == 'N')
-			color = e->texture->bitmap[y_texture * e->texture->w + x_texture];
-		insert_bitmap(e->img, x, y, color);
+		y_texture = ((double) i / wall_h ) * e->texture->h;
+		insert_bitmap(e->img, x, topmost_pixel + i, grab_color(ray->dir, e->texture, x_texture, y_texture));
 		i++;
-		y++;
-		h--;
 	}
 }
