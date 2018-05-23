@@ -47,8 +47,7 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	int		x_texture;
 	int		y_texture;
 	int		color;
-	int		x_offset;
-
+	double	x_offset;
 
 	i = 0;
 	j = 0;
@@ -59,11 +58,14 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	color = set_color(ray->dir);
 	h = (h > WINDOW_W) ? WINDOW_W : h;
 	y = (WINDOW_W / 2) - (h / 2);
-	x_offset = (e->r->dir == 'E' || e->r->dir == 'W') ?(int)ray->y % TILE_SIZE : \
-		(int)ray->x % TILE_SIZE;
+	x_offset = (e->r->dir == 'E' || e->r->dir == 'W') ? \
+		ray->y - (((int)ray->y / TILE_SIZE) * TILE_SIZE) : \
+		ray->x - (((int)ray->x / TILE_SIZE) * TILE_SIZE);
+	printf("ray->x: %f\n", ray->x);
+	printf("((ray->x / TILE_SIZE) * TILE_SIZE): %d\n", ((int)(ray->x / TILE_SIZE) * TILE_SIZE));
+	printf("x_offset: %f\n", x_offset);
 	x_texture = ((double) x_offset / TILE_SIZE) * e->xpm->w;
-	// if (sharfy)
-	// 	printf("y_texture: ");
+	// printf("x_texture: %d\n", x_texture);
 	wall_height = h;
 	while (h)
 	{
@@ -80,6 +82,4 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 		y++;
 		h--;
 	}
-	if (sharfy)
-		printf("\n");
 }

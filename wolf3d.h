@@ -24,8 +24,8 @@
 # define WINDOW_W 750
 # define WINDOW_H 750
 
-# define WALL_H 64
-# define TILE_SIZE 64
+# define WALL_H 100
+# define TILE_SIZE 32
 # define PLAYER_TO_PLANE 255
 
 # define COLOR 0x00FFFFFF
