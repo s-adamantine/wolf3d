@@ -30,20 +30,30 @@ static int		out_of_bounds(t_world *world, double x, double y)
 
 int				refresh_screen(t_env *e)
 {
+	double	dx_f;
+	double	dx_s;
 	double	dx;
+	double	dy_f;
+	double	dy_s;
 	double	dy;
 
-	dx = 0;
-	dy = 0;
+	dx_f = 0;
+	dx_s = 0;
+	dy_f = 0;
+	dy_s = 0;
 	e->p->v = (e->key->lshift == 1) ? RUN_SPEED : WALK_SPEED;
-	(e->key->w || e->key->s) ? dx = cos(e->p->cov) : 0;
-	(e->key->a || e->key->d) ? dx = sin(e->p->cov) : 0;
-	dx *= (e->key->w == 1 || e->key->d == 1) ? e->p->v : -e->p->v;
-	(e->key->w || e->key->s) ? dy = sin(e->p->cov) : 0;
-	(e->key->a || e->key->d) ? dy = cos(e->p->cov) : 0;
-	dy *= (e->key->w || e->key->a) ? -e->p->v : e->p->v;
+	(e->key->w || e->key->s) ? dx_f = cos(e->p->cov) : 0; // up/down
+	(e->key->a || e->key->d) ? dx_s = sin(e->p->cov) : 0; // left/right
+	dx_f *= (e->key->w) ? e->p->v : -e->p->v;
+	dx_s *= (e->key->d) ? e->p->v : -e->p->v;
+	(e->key->w || e->key->s) ? dy_f = sin(e->p->cov) : 0;
+	(e->key->a || e->key->d) ? dy_s = cos(e->p->cov) : 0;
+	dy_f *= (e->key->w) ? -e->p->v : e->p->v;
+	dy_s *= (e->key->a) ? -e->p->v : e->p->v;
 	(e->key->left) ? e->p->cov += 1 * (M_PI / 180) : 0;
 	(e->key->right) ? e->p->cov -= 1 * (M_PI / 180) : 0;
+	dx = dx_f + dx_s;
+	dy = dy_f + dy_s;
 	if (!out_of_bounds(e->world, e->p->x + dx, e->p->y))
 		e->p->x += dx;
 	if (!out_of_bounds(e->world, e->p->x, e->p->y + dy))
