@@ -62,6 +62,18 @@ typedef enum	e_dir
 	WEST
 }				t_dir;
 
+typedef enum	e_type
+{
+	BRICK,
+	STONE,
+	URCHINS,
+	WOOD,
+	BANANAS,
+	ANNE,
+	TRIPPY,
+	BOXES
+}				t_type;
+
 typedef struct	s_key
 {
 	int			left;
@@ -82,6 +94,7 @@ typedef struct	s_image
 	int			*bitmap;
 	int			w;
 	int			h;
+	t_type		type;
 }				t_image;
 
 typedef struct	s_player
@@ -125,6 +138,7 @@ typedef struct	s_env
 	t_window	*win;
 	t_image		*img;
 	t_image		*texture;
+	t_image		**textures;
 	t_world		*world;
 	t_player	*p;
 	t_ray		*r;
@@ -156,5 +170,7 @@ double			distance(t_ray *r, t_player *p);
 
 t_ray			*cast_horizontal(t_world *world, t_player *p, double angle);
 t_ray			*cast_vertical(t_world *world, t_player *p, double angle);
+
+t_image 	    **init_textures(t_env *e);
 
 #endif

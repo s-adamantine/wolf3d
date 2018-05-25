@@ -23,16 +23,16 @@ void			draw_midpoint(t_env *e)
 		insert_bitmap(e->img, 375, y++, 0x00FF0000);
 }
 
-static int		grab_color(t_dir dir, t_image *texture, int x_texture, int y_texture)
+static int		grab_color(t_dir dir, t_env *e, int x_texture, int y_texture)
 {
 	if (dir == NORTH)
-		return (texture->bitmap[y_texture * texture->w + x_texture]);
+		return (e->texture->bitmap[y_texture * e->texture->w + x_texture]);
 	if (dir == SOUTH)
-		return (SOUTH_C);
+		return (e->textures[WOOD]->bitmap[y_texture * e->textures[WOOD]->w + x_texture]);
 	if (dir == EAST)
-		return (EAST_C);
+		return (e->textures[STONE]->bitmap[y_texture * e->textures[STONE]->w + x_texture]);
 	if (dir == WEST)
-		return (WEST_C);
+		return (e->textures[URCHINS]->bitmap[y_texture * e->textures[URCHINS]->w + x_texture]);
 	return (0x00000000);
 }
 
@@ -59,7 +59,7 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	{
 		y_texture = ((double) i / wall_h ) * e->texture->h;
 		insert_bitmap(e->img, x, topmost_pixel + i, grab_color(ray->dir, \
-			e->texture, x_texture, y_texture));
+			e, x_texture, y_texture));
 		i++;
 	}
 }
