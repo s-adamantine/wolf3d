@@ -19,7 +19,6 @@ static t_world		*setup_world(char **argv)
 	world = ft_memalloc(sizeof(t_world));
 	world->wall_h = WALL_H;
 	world->map = parse_file(argv, world);
-	world->tile = TILE_SIZE;
 	return (world);
 }
 

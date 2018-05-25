@@ -99,7 +99,6 @@ typedef struct	s_ray
 typedef struct	s_world
 {
 	char		**map;
-	int			tile;
 	int			wall_h;
 	int			w;
 	int			h;

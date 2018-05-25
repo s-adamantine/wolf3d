@@ -21,9 +21,9 @@ static int		out_of_bounds(t_world *world, double x, double y)
 {
 	if (x < 0 || y < 0)
 		return (1);
-	if (x > (world->w * world->tile) || y > (world->h * world->tile))
+	if (x > (world->w * TILE_SIZE) || y > (world->h * TILE_SIZE))
 		return (1);
-	if (world->map[(int)y / world->tile][(int)x / world->tile] == 'x')
+	if (world->map[(int)y / TILE_SIZE][(int)x / TILE_SIZE] == 'x')
 		return (1);
 	return (0);
 }
