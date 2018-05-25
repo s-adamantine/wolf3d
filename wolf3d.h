@@ -29,10 +29,10 @@
 # define PLAYER_TO_PLANE 255
 
 # define COLOR 0x00FFFFFF
-# define NORTH 0x00FFFFFF
-# define SOUTH 0x0000ACE6
-# define EAST 0x00CC9900
-# define WEST 0x00802B
+# define NORTH_C 0x00FFFFFF
+# define SOUTH_C 0x0000ACE6
+# define EAST_C 0x00CC9900
+# define WEST_C 0x00802B
 
 # define ESC 53
 
@@ -53,6 +53,14 @@
 # define KEYPRESS_EVENT 2
 # define KEYRELEASE_EVENT 3
 # define REDX_EVENT 17
+
+typedef enum	e_dir
+{
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST
+}				t_dir;
 
 typedef struct	s_key
 {
@@ -93,7 +101,7 @@ typedef struct	s_ray
 	double		y;
 	double		s;
 	double		a;
-	char		dir;
+	t_dir		dir;
 }				t_ray;
 
 typedef struct	s_world
@@ -109,11 +117,6 @@ typedef struct	s_window
 	double		h;
 	double		w;
 }				t_window;
-
-typedef struct	s_textures
-{
-
-}				t_textures;
 
 typedef struct	s_env
 {

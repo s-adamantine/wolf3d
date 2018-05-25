@@ -34,13 +34,13 @@ static t_ray	*get_first_hint(double a, t_player *p)
 	{
 		rh->x = p->x + (p->y - rh->y) / tan(rh->a);
 		rh->y -= 1;
-		rh->dir = 'N';
+		rh->dir = NORTH;
 	}
 	else
 	{
 		rh->y += TILE_SIZE;
 		rh->x = p->x + (p->y - rh->y) / tan(rh->a);
-		rh->dir = 'S';
+		rh->dir = SOUTH;
 	}
 	return (rh);
 }
@@ -56,13 +56,13 @@ static t_ray	*get_first_vint(double a, t_player *p)
 	{
 		rv->x += TILE_SIZE;
 		rv->y = p->y + (p->x - rv->x) * tan(rv->a);
-		rv->dir = 'E';
+		rv->dir = EAST;
 	}
 	else
 	{
 		rv->y = p->y + (p->x - rv->x) * tan(rv->a);
 		rv->x -= 1;
-		rv->dir = 'W';
+		rv->dir = WEST;
 	}
 	return (rv);
 }
