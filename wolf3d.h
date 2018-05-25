@@ -131,6 +131,13 @@ typedef struct	s_window
 	double		w;
 }				t_window;
 
+typedef struct	s_wall
+{
+	int			x_texture;
+	int			y_texture;
+	t_type		type;
+}				t_wall;
+
 typedef struct	s_env
 {
 	void		*mlx;
