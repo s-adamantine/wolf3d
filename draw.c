@@ -23,23 +23,15 @@ void			draw_midpoint(t_env *e)
 		insert_bitmap(e->img, 375, y++, 0x00FF0000);
 }
 
-static int		grab_color(t_dir dir, t_env *e, int x_texture, int y_texture)
+static int		grab_color(t_env *e, int x_texture, int y_texture, t_type type)
 {
-	if (dir == NORTH)
-		return (e->texture->bitmap[y_texture * e->texture->w + x_texture]);
-	if (dir == SOUTH)
-		return (e->textures[WOOD]->bitmap[y_texture * e->textures[WOOD]->w + x_texture]);
-	if (dir == EAST)
-		return (e->textures[STONE]->bitmap[y_texture * e->textures[STONE]->w + x_texture]);
-	if (dir == WEST)
-		return (e->textures[URCHINS]->bitmap[y_texture * e->textures[URCHINS]->w + x_texture]);
-	return (0x00000000);
+	return (e->textures[type]->bitmap[y_texture * e->textures[type]->w + x_texture]);
 }
 
-t_type			set_walltype(t_dir dir)
+static t_type	set_walltype(t_dir dir)
 {
 	if (dir == NORTH)
-		return (BRICK);
+		return (ANNE);
 	if (dir == SOUTH)
 		return (WOOD);
 	if (dir == EAST)
@@ -73,8 +65,8 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	while (i <= wall_h)
 	{
 		wall->y_texture = ((double) i / wall_h ) * e->textures[wall->type]->h;
-		insert_bitmap(e->img, x, topmost_pixel + i, grab_color(ray->dir, \
-			e, wall->x_texture, wall->y_texture));
+		insert_bitmap(e->img, x, topmost_pixel + i, grab_color(e, \
+			wall->x_texture, wall->y_texture, wall->type));
 		i++;
 	}
 }
