@@ -135,7 +135,7 @@ typedef struct	s_wall
 {
 	int			x_texture;
 	int			y_texture;
-	t_type		type;
+	t_type		paper;
 }				t_wall;
 
 typedef struct	s_env

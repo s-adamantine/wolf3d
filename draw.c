@@ -28,7 +28,7 @@ static int		grab_color(t_env *e, int x_texture, int y_texture, t_type type)
 	return (e->textures[type]->bitmap[y_texture * e->textures[type]->w + x_texture]);
 }
 
-static t_type	set_walltype(t_dir dir)
+static t_type	set_wallpaper(t_dir dir)
 {
 	if (dir == NORTH)
 		return (ANNE);
@@ -48,25 +48,26 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	int		i;
 	t_wall	*wall;
 	double	x_offset;
+	int		temp;
 
 	i = 0;
 	if (ray->s == INT_MAX)
 		return ;
 	if (!(wall = ft_memalloc(sizeof(t_wall))))
 		return ;
-	wall->type = set_walltype(ray->dir);
+	wall->paper = set_wallpaper(ray->dir);
 	wall_h = (int)(e->p->c / ray->s) + 1;
-	wall_h = (wall_h > WINDOW_W) ? WINDOW_W : wall_h;
-	topmost_pixel = (WINDOW_W / 2) - (wall_h / 2);
+	topmost_pixel = (wall_h > WINDOW_W) ? 0 : (WINDOW_W / 2) - (wall_h / 2);
 	x_offset = (ray->dir == EAST || ray->dir == WEST) ? \
 		ray->y - (((int)ray->y / TILE_SIZE) * TILE_SIZE) : \
 		ray->x - (((int)ray->x / TILE_SIZE) * TILE_SIZE);
-	wall->x_texture = ((double) x_offset / TILE_SIZE) * e->textures[wall->type]->w;
-	while (i <= wall_h)
+	wall->x_texture = ((double) x_offset / TILE_SIZE) * e->textures[wall->paper]->w;
+	temp = (wall_h > WINDOW_W) ? WINDOW_W : wall_h;
+	while (i <= temp)
 	{
-		wall->y_texture = ((double) i / wall_h ) * e->textures[wall->type]->h;
+		wall->y_texture = ((double) i / wall_h) * e->textures[wall->paper]->h;
 		insert_bitmap(e->img, x, topmost_pixel + i, grab_color(e, \
-			wall->x_texture, wall->y_texture, wall->type));
+			wall->x_texture, wall->y_texture, wall->paper));
 		i++;
 	}
 }
