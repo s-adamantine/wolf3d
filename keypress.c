@@ -14,7 +14,7 @@
 
 /*
 ** check if the player will move out of the map bounds or will collide into a
-** wall
+** wall, with a margin of 15 around the wall to prevent texture stretching
 */
 
 static int		out_of_bounds(t_world *world, double x, double y)
@@ -24,6 +24,14 @@ static int		out_of_bounds(t_world *world, double x, double y)
 	if (x > (world->w * TILE_SIZE) || y > (world->h * TILE_SIZE))
 		return (1);
 	if (world->map[(int)y / TILE_SIZE][(int)x / TILE_SIZE] == 'x')
+		return (1);
+	if (world->map[(int)(y + 15) / TILE_SIZE][(int)x / TILE_SIZE] == 'x')
+		return (1);
+	if (world->map[(int)(y - 15) / TILE_SIZE][(int)x / TILE_SIZE] == 'x')
+		return (1);
+	if (world->map[(int)(y) / TILE_SIZE][(int)(x + 15) / TILE_SIZE] == 'x')
+		return (1);
+	if (world->map[(int)(y) / TILE_SIZE][(int)(x - 15) / TILE_SIZE] == 'x')
 		return (1);
 	return (0);
 }
