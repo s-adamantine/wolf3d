@@ -20,7 +20,7 @@ t_image     **init_textures(t_env *e)
     t_image **textures;
 
     textures = ft_memalloc(sizeof(t_image *) * 8);
-    textures[BRICK] = new_xpm_image(e, "textures/brickwall.xpm", 800, 533);
+    textures[BRICK] = new_xpm_image(e, "textures/brickwall.xpm", 564, 564);
     textures[STONE] = new_xpm_image(e, "textures/stone.xpm", 1024, 1024);
     textures[URCHINS] = new_xpm_image(e, "textures/urchins.xpm", 450, 450);
     textures[WOOD] = new_xpm_image(e, "textures/wood.xpm", 900, 900);
