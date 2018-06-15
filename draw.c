@@ -31,7 +31,7 @@ static int		grab_color(t_env *e, int x_texture, int y_texture, t_type type)
 static t_type	set_wallpaper(t_dir dir)
 {
 	if (dir == NORTH)
-		return (ANNE);
+		return (BRICK);
 	if (dir == SOUTH)
 		return (WOOD);
 	if (dir == EAST)
@@ -40,6 +40,18 @@ static t_type	set_wallpaper(t_dir dir)
 		return (URCHINS);
 	return (0);
 }
+
+static double	grab_y_offset(t_env *e, t_ray *ray)
+{
+	double	perfect_distance;
+	double	y_offset;
+
+	perfect_distance = e->p->c / WINDOW_H;
+	y_top_offset = (perfect_distance - ray->s) / (2 * perfect_distance);
+	y_bottom_offset =
+	return (y_top_offset);
+}
+
 
 /*
 ** temp is the wall height, but remaining static because it needs to be a counter
@@ -54,6 +66,7 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	t_wall	*wall;
 	double	x_offset;
 	int		temp;
+	double	y_offset;
 	double	percentage;
 
 	i = 0;
@@ -69,10 +82,11 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 		ray->x - (((int)ray->x / TILE_SIZE) * TILE_SIZE);
 	wall->x_texture = ((double) x_offset / TILE_SIZE) * e->textures[wall->paper]->w;
 	temp = (wall_h > WINDOW_W) ? WINDOW_W : wall_h;
-	percentage = (wall_h > WINDOW_W) ? (double) WINDOW_W / wall_h : 1;
+	y_offset = (wall_h > WINDOW_W) ? grab_y_offset(e, ray) : 0;
+	percentage = (wall_h > WINDOW_W) ? 1 - (y_offset * 2) : 1;
 	while (i <= temp)
 	{
-		wall->y_texture = ((double) i / (percentage * wall_h)) * e->textures[wall->paper]->h;
+		wall->y_texture = (double) ((i / (percentage * wall_h)) + y_offset) * e->textures[wall->paper]->h;
 		insert_bitmap(e->img, x, topmost_pixel + i, grab_color(e, \
 			wall->x_texture, wall->y_texture, wall->paper));
 		i++;
