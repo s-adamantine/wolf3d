@@ -131,12 +131,14 @@ typedef struct	s_window
 	double		w;
 }				t_window;
 
-typedef struct	s_wall
+typedef struct	s_texture
 {
-	int			x_texture;
-	int			y_texture;
-	t_type		paper;
-}				t_wall;
+	int			x;
+	int			y;
+	double		x_offset;
+	double		y_offset;
+	t_type		type;
+}				t_texture;
 
 typedef struct	s_env
 {

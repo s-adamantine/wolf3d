@@ -50,14 +50,15 @@ static double	grab_y_offset(t_env *e, t_ray *ray)
 	y_top_offset = (perfect_distance - ray->s) / (2 * perfect_distance);
 	return (y_top_offset);
 }
-//
-// static double	grab_y_increment(double y_top_offset, double wall_h)
-// {
-// 	double	y_increment;
-//
-// 	to_increment = (1 -  y_top_offset * 2);
-// 	y_increment = to_increment / pixls_in_screen;
-// }
+
+void			setup_texture(t_texture *t, t_ray *ray, t_env *e)
+{
+	t->type = set_wallpaper(ray->dir);
+	t->x_offset = (ray->dir == EAST || ray->dir == WEST) ? \
+		ray->y - (((int)ray->y / TILE_SIZE) * TILE_SIZE) : \
+		ray->x - (((int)ray->x / TILE_SIZE) * TILE_SIZE);
+	t->x = ((double) t->x_offset / TILE_SIZE) * e->textures[t->type]->w;
+}
 
 /*
 ** temp is the wall height, but remaining static because it needs to be a counter
@@ -69,37 +70,26 @@ void			draw_wallpiece(t_env *e, t_ray *ray, int x)
 	int		wall_h;
 	int		topmost_pixel;
 	int		i;
-	t_wall	*wall;
-	double	x_offset;
-	int		temp;
+	t_texture	*t;
 	double	y_offset;
 	double	y_increment;
-	double	percentage;
 
 	i = 0;
 	if (ray->s == INT_MAX)
 		return ;
-	if (!(wall = ft_memalloc(sizeof(t_wall))))
+	if (!(t = ft_memalloc(sizeof(t_texture))))
 		return ;
-	wall->paper = set_wallpaper(ray->dir);
+	setup_texture(t, ray, e);
 	wall_h = (int)(e->p->c / ray->s) + 1;
-	topmost_pixel = (wall_h > WINDOW_W) ? 0 : (WINDOW_W / 2) - (wall_h / 2);
-	x_offset = (ray->dir == EAST || ray->dir == WEST) ? \
-		ray->y - (((int)ray->y / TILE_SIZE) * TILE_SIZE) : \
-		ray->x - (((int)ray->x / TILE_SIZE) * TILE_SIZE);
-	wall->x_texture = ((double) x_offset / TILE_SIZE) * e->textures[wall->paper]->w;
-	temp = (wall_h > WINDOW_W) ? WINDOW_W : wall_h;
-	y_offset = (wall_h > WINDOW_W) ? grab_y_offset(e, ray) : 0;
-	percentage = (wall_h > WINDOW_W) ? 1 - (y_offset * 2) : 1;
-	y_increment = (1 - (y_offset * 2)) / WINDOW_H;
-	while (i <= temp)
+	wall_h = (wall_h > WINDOW_H) ? WINDOW_H : wall_h;
+	topmost_pixel = (wall_h == WINDOW_H) ? 0 : (WINDOW_H / 2) - (wall_h / 2);
+	y_offset = (wall_h == WINDOW_H) ? grab_y_offset(e, ray) : 0;
+	y_increment = (1 - (y_offset * 2)) / wall_h;
+	while (i <= wall_h)
 	{
-		if (wall_h > WINDOW_W)
-			wall->y_texture = (double) ((i * y_increment) + y_offset) * e->textures[wall->paper]->h;
-		else
-			wall->y_texture = (double) ((i / (percentage * wall_h)) + y_offset) * e->textures[wall->paper]->h;
+		t->y = (double) ((i * y_increment) + y_offset) * e->textures[t->type]->h;
 		insert_bitmap(e->img, x, topmost_pixel + i, grab_color(e, \
-			wall->x_texture, wall->y_texture, wall->paper));
+			t->x, t->y, t->type));
 		i++;
 	}
 }
