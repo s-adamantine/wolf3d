@@ -25,7 +25,8 @@
 # define WINDOW_H 750
 
 # define WALL_H 64
-# define TILE_SIZE 64
+# define WALL_MARGIN 15
+# define TILE 64
 # define PLAYER_TO_PLANE 255
 
 # define COLOR 0x00FFFFFF
@@ -138,6 +139,7 @@ typedef struct	s_texture
 	double		x_offset;
 	double		y_offset;
 	t_type		type;
+	t_image		**textures;
 }				t_texture;
 
 typedef struct	s_env
@@ -146,9 +148,8 @@ typedef struct	s_env
 	void		*wid;
 	t_window	*win;
 	t_image		*img;
-	t_image		*texture;
-	t_image		**textures;
 	t_world		*world;
+	t_texture	*t;
 	t_player	*p;
 	t_ray		*r;
 	t_key		*key;
@@ -158,28 +159,23 @@ t_image			*new_image(t_env *e, int width, int height);
 t_image			*new_xpm_image(t_env *e, char *name, int w, int h);
 void			insert_bitmap(t_image *img, int x, int y, unsigned int color);
 void			print_image(t_env *e);
-
 t_env			*setup_environment(int argc, char **argv);
 void			exit_error(char *str);
 int				quit_program(t_env *e);
 void			render(t_env *e);
-void			draw_wallpiece(t_env *e, t_ray *ray, int x);
+void			draw_wallpiece(t_env *e, t_texture *t, t_ray *ray, int x);
 void			draw_midpoint(t_env *e);
 int				handle_keypress(int keycode, t_env *e);
 int				handle_keyrelease(int keycode, t_env *e);
 int				refresh_screen(t_env *e);
 char			**parse_file(char **argv, t_world *world);
-
 int				tophalf(double value);
 int				righthalf(double value);
-
 int				get_color(t_image *img, int x, int y);
-
 double			distance(t_ray *r, t_player *p);
-
 t_ray			*cast_horizontal(t_world *world, t_player *p, double angle);
 t_ray			*cast_vertical(t_world *world, t_player *p, double angle);
-
-t_image 	    **init_textures(t_env *e);
+t_image			**load_textures(t_env *e);
+t_type			set_wallpaper(t_dir dir);
 
 #endif

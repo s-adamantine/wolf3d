@@ -43,7 +43,7 @@ t_image	*new_image(t_env *e, int width, int height)
 	img->w = width;
 	img->h = height;
 	img->id = mlx_new_image(e->mlx, width, height);
-	img->bitmap = (int *)mlx_get_data_addr(img->id, &(img->bpp), &(img->sline), \
+	img->bitmap = (int *)mlx_get_data_addr(img->id, &(img->bpp), &(img->sline),
 			&(img->endian));
 	return (img);
 }

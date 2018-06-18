@@ -16,9 +16,9 @@ static int		check_wall(t_world *world, double x, double y)
 {
 	if (x < 0 || y < 0)
 		return (-1);
-	if (x >= (world->w * TILE_SIZE) || y >= (world->h * TILE_SIZE))
+	if (x >= (world->w * TILE) || y >= (world->h * TILE))
 		return (-1);
-	if (world->map[(int)y / TILE_SIZE][(int)x / TILE_SIZE] == 'x')
+	if (world->map[(int)y / TILE][(int)x / TILE] == 'x')
 		return (1);
 	return (0);
 }
@@ -29,7 +29,7 @@ static t_ray	*get_first_hint(double a, t_player *p)
 
 	rh = ft_memalloc(sizeof(t_ray));
 	rh->a = a;
-	rh->y = (int)(p->y / TILE_SIZE) * TILE_SIZE;
+	rh->y = (int)(p->y / TILE) * TILE;
 	if (tophalf(rh->a))
 	{
 		rh->x = p->x + (p->y - rh->y) / tan(rh->a);
@@ -38,7 +38,7 @@ static t_ray	*get_first_hint(double a, t_player *p)
 	}
 	else
 	{
-		rh->y += TILE_SIZE;
+		rh->y += TILE;
 		rh->x = p->x + (p->y - rh->y) / tan(rh->a);
 		rh->dir = SOUTH;
 	}
@@ -51,10 +51,10 @@ static t_ray	*get_first_vint(double a, t_player *p)
 
 	rv = ft_memalloc(sizeof(t_ray));
 	rv->a = a;
-	rv->x = (int)(p->x / TILE_SIZE) * TILE_SIZE;
+	rv->x = (int)(p->x / TILE) * TILE;
 	if (righthalf(rv->a))
 	{
-		rv->x += TILE_SIZE;
+		rv->x += TILE;
 		rv->y = p->y + (p->x - rv->x) * tan(rv->a);
 		rv->dir = EAST;
 	}
@@ -75,14 +75,14 @@ t_ray			*cast_horizontal(t_world *world, t_player *p, double angle)
 	t_ray	*rh;
 
 	rh = get_first_hint(angle, p);
-	dx = TILE_SIZE / tan(rh->a);
-	dy = TILE_SIZE;
+	dx = TILE / tan(rh->a);
+	dy = TILE;
 	while (!(wall = check_wall(world, rh->x, rh->y)))
 	{
 		rh->x += tophalf(rh->a) ? dx : -dx;
 		rh->y += tophalf(rh->a) ? -dy : dy;
 	}
-	rh->y = ((int)rh->y % TILE_SIZE == 0) ? rh->y : rh->y + 1;
+	rh->y = ((int)rh->y % TILE == 0) ? rh->y : rh->y + 1;
 	rh->x = p->x + (p->y - rh->y) / tan(rh->a);
 	rh->s = (wall == 1) ? distance(rh, p) : INT_MAX;
 	return (rh);
@@ -96,14 +96,14 @@ t_ray			*cast_vertical(t_world *world, t_player *p, double angle)
 	t_ray	*rv;
 
 	rv = get_first_vint(angle, p);
-	dx = TILE_SIZE;
-	dy = TILE_SIZE * fabs(tan(rv->a));
+	dx = TILE;
+	dy = TILE * fabs(tan(rv->a));
 	while (!(wall = check_wall(world, rv->x, rv->y)))
 	{
 		rv->y += tophalf(rv->a) ? -dy : dy;
 		rv->x += righthalf(rv->a) ? dx : -dx;
 	}
-	rv->x = ((int)rv->x % TILE_SIZE == 0) ? rv->x : rv->x + 1;
+	rv->x = ((int)rv->x % TILE == 0) ? rv->x : rv->x + 1;
 	rv->y = p->y + (p->x - rv->x) * tan(rv->a);
 	rv->s = (wall == 1) ? distance(rv, p) : INT_MAX;
 	return (rv);

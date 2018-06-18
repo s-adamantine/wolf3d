@@ -41,7 +41,7 @@ void			render(t_env *e)
 		rv = cast_vertical(e->world, e->p, angle);
 		rh = cast_horizontal(e->world, e->p, angle);
 		e->r = (rh->s < rv->s) ? rh : rv;
-		draw_wallpiece(e, e->r, x++);
+		draw_wallpiece(e, e->t, e->r, x++);
 		free(rh);
 		free(rv);
 		angle -= e->p->fov / WINDOW_W;

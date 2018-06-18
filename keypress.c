@@ -4,9 +4,9 @@
 /*   keypress.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sadamant <marvin@42.fr>                    +#+  +:+       +#+        */
-/*                                                 +#+#+#+#+#+   +#+           */
-/*   Created: 2018/02/22 15:57:42 by sadamant          #+#    #+#             */
-/*   Updated: 2018/03/13 14:55:59 by sadamant         ###   ########.fr       */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/18 13:04:23 by sadamant          #+#    #+#             */
+/*   Updated: 2018/06/18 13:04:27 by sadamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 /*
 ** check if the player will move out of the map bounds or will collide into a
-** wall, with a margin of 15 around the wall to prevent texture stretching
+** wall, with a margin  around the wall to prevent texture stretching
 */
 
 static int		out_of_bounds(t_world *world, double x, double y)
 {
 	if (x < 0 || y < 0)
 		return (1);
-	if (x > (world->w * TILE_SIZE) || y > (world->h * TILE_SIZE))
+	if (x > (world->w * TILE) || y > (world->h * TILE))
 		return (1);
-	if (world->map[(int)y / TILE_SIZE][(int)x / TILE_SIZE] == 'x')
+	if (world->map[(int)y / TILE][(int)x / TILE] == 'x')
 		return (1);
-	if (world->map[(int)(y + 15) / TILE_SIZE][(int)x / TILE_SIZE] == 'x')
+	if (world->map[(int)(y + WALL_MARGIN) / TILE][(int)x / TILE] == 'x')
 		return (1);
-	if (world->map[(int)(y - 15) / TILE_SIZE][(int)x / TILE_SIZE] == 'x')
+	if (world->map[(int)(y - WALL_MARGIN) / TILE][(int)x / TILE] == 'x')
 		return (1);
-	if (world->map[(int)(y) / TILE_SIZE][(int)(x + 15) / TILE_SIZE] == 'x')
+	if (world->map[(int)(y) / TILE][(int)(x + WALL_MARGIN) / TILE] == 'x')
 		return (1);
-	if (world->map[(int)(y) / TILE_SIZE][(int)(x - 15) / TILE_SIZE] == 'x')
+	if (world->map[(int)(y) / TILE][(int)(x - WALL_MARGIN) / TILE] == 'x')
 		return (1);
 	return (0);
 }
@@ -39,6 +39,7 @@ static int		out_of_bounds(t_world *world, double x, double y)
 /*
 ** f = forwards/backwards keypresses (W/S) and s = sideways keypresses (A/D)
 */
+
 static void		recalculate_movement(t_key *key, t_player *p, t_world *world)
 {
 	double	dx_f;

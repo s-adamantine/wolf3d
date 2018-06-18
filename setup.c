@@ -22,7 +22,7 @@ static t_world		*setup_world(char **argv)
 	return (world);
 }
 
-static void		position_player(t_player *p, char **map)
+static void			position_player(t_player *p, char **map)
 {
 	int	i;
 	int	j;
@@ -35,8 +35,8 @@ static void		position_player(t_player *p, char **map)
 		{
 			if (map[j][i] == 'P')
 			{
-				p->x = (i + 1) * TILE_SIZE - TILE_SIZE / 2;
-				p->y = (j + 1) * TILE_SIZE - TILE_SIZE / 2;
+				p->x = (i + 1) * TILE - TILE / 2;
+				p->y = (j + 1) * TILE - TILE / 2;
 				return ;
 			}
 			i++;
@@ -76,7 +76,8 @@ t_env				*setup_environment(int argc, char **argv)
 	e->wid = mlx_new_window(e->mlx, WINDOW_W, WINDOW_H, "wolf3d");
 	e->img = new_image(e, WINDOW_W, WINDOW_H);
 	e->key = ft_memalloc(sizeof(t_key));
-	e->textures = init_textures(e);
+	e->t = ft_memalloc(sizeof(t_texture));
+	e->t->textures = load_textures(e);
 	mlx_hook(e->wid, KEYPRESS_EVENT, 0, handle_keypress, e);
 	mlx_hook(e->wid, KEYRELEASE_EVENT, 0, handle_keyrelease, e);
 	mlx_hook(e->wid, REDX_EVENT, 0, quit_program, e);
