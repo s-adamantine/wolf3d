@@ -35,10 +35,11 @@ FLAGS = -c -Wall -Wextra -Werror
 FRAMEWORK = -framework OpenGL -framework AppKit
 
 INCLUDES = -I libft/includes -I minilibx_macos/
+HEADER = wolf3d.h
 
 all: $(NAME)
 
-$(OBJ): $(SRC)
+$(OBJ): $(SRC) $(HEADER)
 	$(CC) $(FLAGS) $(SRC) $(INCLUDES)
 
 libft:
@@ -64,4 +65,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all libs clean fclean re pr libft minilibx
+.PHONY: all clean fclean re libft minilibx
