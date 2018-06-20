@@ -26,7 +26,7 @@ LIBNAME1 = libft.a
 LIBNAME2 = libmlx.a
 
 SRC = main.c image.c setup.c parse.c error.c keypress.c cast.c draw.c \
-	render.c circle.c xpm.c wall.c textures.c
+	render.c circle.c xpm.c wall.c textures.c mlx_helpers.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -35,11 +35,10 @@ FLAGS = -c -Wall -Wextra -Werror
 FRAMEWORK = -framework OpenGL -framework AppKit
 
 INCLUDES = -I libft/includes -I minilibx_macos/
-HEADER = wolf3d.h
 
 all: $(NAME)
 
-$(OBJ): $(SRC) $(HEADER)
+$(OBJ): $(SRC)
 	$(CC) $(FLAGS) $(SRC) $(INCLUDES)
 
 libft:
@@ -65,4 +64,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re libft minilibx
+.PHONY: all libs clean fclean re pr libft minilibx

@@ -20,6 +20,8 @@ void	clear_image(t_image *img)
 void	print_image(t_env *e)
 {
 	mlx_put_image_to_window(e->mlx, e->wid, e->img->id, 0, 0);
+	// mlx_put_text_and_value("x: ", (int) e->p->x, 640, 20, TEXTCOLOR, e);
+	// mlx_put_text_and_value("y: ", (int) e->p->y, 640, 40, TEXTCOLOR, e);
 	clear_image(e->img);
 }
 

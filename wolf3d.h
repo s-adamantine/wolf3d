@@ -29,7 +29,7 @@
 # define TILE 64
 # define PLAYER_TO_PLANE 255
 
-# define COLOR 0x00FFFFFF
+# define TEXTCOLOR 0x00FFFFFF
 # define NORTH_C 0x00FFFFFF
 # define SOUTH_C 0x0000ACE6
 # define EAST_C 0x00CC9900
@@ -176,5 +176,6 @@ t_ray			*cast_horizontal(t_world *world, t_player *p, double angle);
 t_ray			*cast_vertical(t_world *world, t_player *p, double angle);
 t_image			**load_textures(t_env *e);
 t_type			set_wallpaper(t_dir dir);
+void			mlx_put_text_and_value(char *str, int number, int x, int y, int color, t_env *e);
 
 #endif
