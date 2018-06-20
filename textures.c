@@ -15,13 +15,13 @@
 t_type		set_wallpaper(t_dir dir)
 {
 	if (dir == NORTH)
-		return (BRICK);
+		return (ICE);
 	if (dir == SOUTH)
-		return (WOOD);
+		return (BOXES);
 	if (dir == EAST)
-		return (STONE);
+		return (BLUESTONE);
 	if (dir == WEST)
-		return (URCHINS);
+		return (WOOD);
 	return (0);
 }
 
@@ -31,13 +31,10 @@ t_image		**load_textures(t_env *e)
 
 	textures = ft_memalloc(sizeof(t_image *) * 8);
 	textures[BRICK] = new_xpm_image(e, "textures/brickwall.xpm", 564, 564);
-	textures[STONE] = new_xpm_image(e, "textures/stone.xpm", 1024, 1024);
-	textures[URCHINS] = new_xpm_image(e, "textures/urchins.xpm", 450, 450);
 	textures[WOOD] = new_xpm_image(e, "textures/wood.xpm", 900, 900);
 	textures[BANANAS] = new_xpm_image(e, "textures/bananas.xpm", 649, 275);
-	textures[ANNE] = new_xpm_image(e, "textures/anne.xpm", 800, 533);
-	textures[TRIPPY] = new_xpm_image(e, "textures/trippyflowers.xpm", 1300,
-			1300);
+	textures[ICE] = new_xpm_image(e, "textures/icewall.xpm", 1280, 804);
+	textures[BLUESTONE] = new_xpm_image(e, "textures/bluestone.xpm", 1200, 630);
 	textures[BOXES] = new_xpm_image(e, "textures/seriousboxes.xpm", 576, 576);
 	return (textures);
 }

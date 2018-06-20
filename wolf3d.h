@@ -66,12 +66,10 @@ typedef enum	e_dir
 typedef enum	e_type
 {
 	BRICK,
-	STONE,
-	URCHINS,
 	WOOD,
 	BANANAS,
-	ANNE,
-	TRIPPY,
+	ICE,
+	BLUESTONE,
 	BOXES
 }				t_type;
 
