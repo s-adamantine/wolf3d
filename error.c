@@ -16,7 +16,6 @@ void		exit_id(int i)
 {
 	if (i == 1)
 		exit_error("Failed to allocate memory.");
-
 }
 
 void		exit_error(char *str)
