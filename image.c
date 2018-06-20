@@ -39,7 +39,8 @@ t_image	*new_image(t_env *e, int width, int height)
 {
 	t_image	*img;
 
-	img = ft_memalloc(sizeof(t_image));
+	if (!(img = ft_memalloc(sizeof(t_image))))
+		exit_id(1);
 	img->w = width;
 	img->h = height;
 	img->id = mlx_new_image(e->mlx, width, height);

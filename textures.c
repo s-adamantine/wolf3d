@@ -29,7 +29,8 @@ t_image		**load_textures(t_env *e)
 {
 	t_image **textures;
 
-	textures = ft_memalloc(sizeof(t_image *) * 8);
+	if (!(textures = ft_memalloc(sizeof(t_image *) * 6)))
+		exit_id(1);
 	textures[BRICK] = new_xpm_image(e, "textures/brickwall.xpm", 564, 564);
 	textures[WOOD] = new_xpm_image(e, "textures/wood.xpm", 900, 900);
 	textures[BANANAS] = new_xpm_image(e, "textures/bananas.xpm", 649, 275);
@@ -43,7 +44,8 @@ t_image		*new_xpm_image(t_env *e, char *name, int w, int h)
 {
 	t_image	*xpm;
 
-	xpm = (t_image *)malloc(sizeof(t_image));
+	if (!(xpm = (t_image *)malloc(sizeof(t_image))))
+		exit_id(1);
 	xpm->w = w;
 	xpm->h = h;
 	xpm->id = mlx_xpm_file_to_image(e->mlx, name, &w, &h);

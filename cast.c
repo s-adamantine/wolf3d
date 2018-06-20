@@ -27,7 +27,8 @@ static t_ray	*get_first_hint(double a, t_player *p)
 {
 	t_ray	*rh;
 
-	rh = ft_memalloc(sizeof(t_ray));
+	if (!(rh = ft_memalloc(sizeof(t_ray))))
+		exit_id(1);
 	rh->a = a;
 	rh->y = (int)(p->y / TILE) * TILE;
 	if (tophalf(rh->a))
@@ -49,7 +50,8 @@ static t_ray	*get_first_vint(double a, t_player *p)
 {
 	t_ray	*rv;
 
-	rv = ft_memalloc(sizeof(t_ray));
+	if (!(rv = ft_memalloc(sizeof(t_ray))))
+		exit_id(1);
 	rv->a = a;
 	rv->x = (int)(p->x / TILE) * TILE;
 	if (righthalf(rv->a))

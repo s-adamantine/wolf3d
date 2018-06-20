@@ -157,6 +157,7 @@ t_image			*new_image(t_env *e, int width, int height);
 t_image			*new_xpm_image(t_env *e, char *name, int w, int h);
 void			insert_bitmap(t_image *img, int x, int y, unsigned int color);
 void			print_image(t_env *e);
+void			exit_id(int i);
 t_env			*setup_environment(int argc, char **argv);
 void			exit_error(char *str);
 int				quit_program(t_env *e);

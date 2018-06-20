@@ -12,6 +12,13 @@
 
 #include "wolf3d.h"
 
+void		exit_id(int i)
+{
+	if (i == 1)
+		exit_error("Failed to allocate memory.");
+
+}
+
 void		exit_error(char *str)
 {
 	ft_putendl_fd(str, 2);
